@@ -11,6 +11,7 @@ import { bookSlot } from '@/api/helpers'; // Changed from saveBooking
 import { formatDate, formatTime, getDayName, isToday, isTomorrow } from '@/utils/dateUtils';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { sendAppointmentEmail } from '@/lib/email';
 
 const bookingSchema = z.object({
   patientName: z.string().min(2, 'Name must be at least 2 characters').max(100),
@@ -90,6 +91,17 @@ export const BookingModal = () => {
         // For now let's just show success for mocks, but log warning.
         console.warn("Booking a mock slot, won't persist to backend DB");
       }
+
+      // --- SEND EMAIL NOTIFICATION ---
+      await sendAppointmentEmail({
+        patientName: data.patientName,
+        patientEmail: data.email,
+        doctorName: selectedDoctor.name,
+        date: formatDate(selectedDate),
+        time: formatTime(selectedTime.time),
+        reason: data.reason,
+      });
+      // -------------------------------
 
       setStep('success');
       toast({
