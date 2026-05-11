@@ -18,16 +18,19 @@ const Doctors = () => {
     const rating = Number(searchParams.get('rating')) || 0;
 
     return doctors.filter((doctor) => {
+      const name = (doctor.name ?? '').toLowerCase();
+      const spec = (doctor.specialty ?? '').toLowerCase();
+      const hosp = (doctor.hospital ?? '').toLowerCase();
       const matchesQuery =
         !query ||
-        doctor.name.toLowerCase().includes(query) ||
-        doctor.specialty.toLowerCase().includes(query) ||
-        doctor.hospital.toLowerCase().includes(query);
+        name.includes(query) ||
+        spec.includes(query) ||
+        hosp.includes(query);
 
       const matchesSpecialty =
         specialty === 'All Specialties' || doctor.specialty === specialty;
 
-      const matchesRating = doctor.rating >= rating;
+      const matchesRating = (Number(doctor.rating) || 0) >= rating;
 
       return matchesQuery && matchesSpecialty && matchesRating;
     });

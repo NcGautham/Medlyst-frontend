@@ -11,24 +11,52 @@ interface DoctorsContextType {
 
 const DoctorsContext = createContext<DoctorsContextType | undefined>(undefined);
 
+/** API may return tags as string (TEXT column), PG array string, JSON, or array — UI needs string[]. */
+function normalizeTags(raw: unknown, fallbackLabel: string): string[] {
+    if (Array.isArray(raw)) {
+        return raw.map(String).filter(Boolean);
+    }
+    if (typeof raw === 'string' && raw.trim()) {
+        const s = raw.trim();
+        try {
+            const parsed = JSON.parse(s) as unknown;
+            if (Array.isArray(parsed)) return parsed.map(String).filter(Boolean);
+        } catch {
+            /* not JSON */
+        }
+        if (s.startsWith('{') && s.endsWith('}')) {
+            return s
+                .slice(1, -1)
+                .split(',')
+                .map((t) => t.replace(/^"|"$/g, '').trim())
+                .filter(Boolean);
+        }
+        return s.split(',').map((t) => t.trim()).filter(Boolean);
+    }
+    return [fallbackLabel || 'General'];
+}
+
 export const DoctorsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [doctors, setDoctors] = useState<Doctor[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     // Helper to map DB doctor to UI Doctor
-    const mapApiDoctorToDoctor = (d: ApiDoctor): Doctor => ({
-        id: String(d.id),
-        name: d.name,
-        specialty: d.speciality || d.specialty || 'General',
-        rating: Number(d.rating) || 5.0,
-        reviewCount: Number(d.review_count) || 0,
-        hospital: d.hospital || 'Medlyst Clinic',
-        bio: d.bio || 'Verified Specialist',
-        photoUrl: d.photo_url || 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=400&fit=crop&crop=face',
-        tags: d.tags || [d.speciality || d.specialty || 'General'],
-        experience: Number(d.experience) || 1,
-        availableSlots: [], // Will be populated from slots fetch
-    });
+    const mapApiDoctorToDoctor = (d: ApiDoctor): Doctor => {
+        const spec = d.speciality || d.specialty || 'General';
+        return {
+            id: String(d.id),
+            name: d.name ?? 'Unknown',
+            specialty: spec,
+            rating: Number(d.rating) || 5.0,
+            reviewCount: Number(d.review_count) || 0,
+            hospital: d.hospital || 'Medlyst Clinic',
+            bio: d.bio || 'Verified Specialist',
+            photoUrl: d.photo_url || 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=400&fit=crop&crop=face',
+            tags: normalizeTags(d.tags, spec),
+            experience: Number(d.experience) || 1,
+            availableSlots: [], // Will be populated from slots fetch
+        };
+    };
 
     const refreshDoctors = async () => {
         setIsLoading(true);
@@ -73,9 +101,13 @@ export const DoctorsProvider: React.FC<{ children: ReactNode }> = ({ children })
                 // Group by Date for UI structure: { date: string, times: {time, slotId}[] }
                 const slotsByDate: Record<string, { time: string, slotId: string }[]> = {};
                 docSlots.forEach(s => {
-                    // s.start_time is ISO string
-                    const date = s.start_time.split('T')[0];
-                    const time = s.start_time.split('T')[1].substring(0, 5); // HH:MM
+                    const st = s.start_time;
+                    if (!st || typeof st !== 'string') return;
+                    const parts = st.split('T');
+                    const date = parts[0];
+                    const timePart = parts[1];
+                    if (!date || !timePart) return;
+                    const time = timePart.substring(0, 5); // HH:MM
 
                     if (!slotsByDate[date]) slotsByDate[date] = [];
                     // Avoid duplicates if any, but now we store objects with IDs
