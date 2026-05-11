@@ -93,12 +93,12 @@ export const Hero = () => {
         <div className="orb orb-green-lg w-[600px] h-[600px] top-[-100px] left-[-150px] opacity-60" />
         <div className="orb orb-green-sm w-[400px] h-[400px] bottom-[-50px] right-[-100px] opacity-50" />
         <div className="orb orb-green-lg w-[300px] h-[300px] top-[40%] left-[55%] opacity-30" />
-        {/* Subtle grid overlay */}
+        {/* Grid overlay — line alpha tuned for dark bg (forest is darker than old mint; no extra 0.035 layer) */}
         <div
-          className="absolute inset-0 opacity-[0.035]"
+          className="absolute inset-0"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(52,103,57,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(52,103,57,0.22) 1px, transparent 1px)',
+              'linear-gradient(rgba(124, 184, 131, 0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(124, 184, 131, 0.14) 1px, transparent 1px)',
             backgroundSize: '60px 60px',
           }}
         />
