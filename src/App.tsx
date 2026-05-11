@@ -69,8 +69,13 @@ const AnimatedRoutes = () => {
   // Scroll to top whenever the pathname changes — done here so it fires after
   // the new motion.div has mounted, avoiding a jump during the outgoing exit.
   useEffect(() => {
-    const scroll = () =>
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    const scroll = () => {
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      } catch {
+        window.scrollTo(0, 0);
+      }
+    };
     requestAnimationFrame(scroll);
   }, [location.pathname]);
 
@@ -81,17 +86,17 @@ const AnimatedRoutes = () => {
         initial={
           reduce
             ? { opacity: 0 }
-            : { opacity: 0, y: 14, filter: 'blur(5px)' }
+            : { opacity: 0, y: 12 }
         }
         animate={
           reduce
             ? { opacity: 1 }
-            : { opacity: 1, y: 0, filter: 'blur(0px)' }
+            : { opacity: 1, y: 0 }
         }
         exit={
           reduce
             ? { opacity: 0 }
-            : { opacity: 0, y: -8, filter: 'blur(3px)' }
+            : { opacity: 0, y: -6 }
         }
         transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
       >
