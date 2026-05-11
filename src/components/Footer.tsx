@@ -1,5 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { Container } from '@/components/ui/container';
+import { cn } from '@/lib/utils';
 
 const footerLinks = {
   company: [
@@ -58,91 +62,158 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
+type GroupKey = 'company' | 'support' | 'legal';
+
+const groupLabels: Record<GroupKey, string> = {
+  company: 'Company',
+  support: 'Support',
+  legal: 'Legal',
+};
+
 export const Footer = () => {
+  const [openGroup, setOpenGroup] = useState<GroupKey | null>(null);
+  const toggle = (g: GroupKey) => setOpenGroup((o) => (o === g ? null : g));
+
   return (
-    <footer className="glass-nav border-t border-forest/10 text-white/80">
+    <footer className="glass-nav border-t border-[#346739]/15 text-white/80">
       <Container size="lg" className="py-10 sm:py-12 md:py-16">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-8 md:grid-cols-4 lg:gap-12">
-          {/* Brand */}
-          <div className="sm:col-span-2 md:col-span-1">
-            <Link to="/" className="flex items-center gap-2 mb-4 group">
-              <div className="w-10 h-10 rounded-xl bg-forest/15 border border-forest/25 flex items-center justify-center group-hover:border-forest-light/50 transition-colors">
-                <img src="/logo.png" alt="Medlyst" className="w-7 h-7 object-contain" />
+        {/* Brand row */}
+        <div className="grid grid-cols-1 gap-8 sm:gap-10 md:grid-cols-4 lg:gap-12">
+          <div className="md:col-span-1">
+            <Link to="/" className="group mb-4 flex items-center gap-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#346739]/30 bg-[#346739]/15 transition-colors group-hover:border-[#5aad68]/55">
+                <img src="/logo.png" alt="Medlyst" className="h-7 w-7 object-contain" />
               </div>
               <span className="text-xl font-bold text-white">Medlyst</span>
             </Link>
-            <p className="text-white/40 text-sm leading-relaxed mb-6">
-              Making healthcare accessible by connecting patients with top-rated doctors effortlessly.
+            <p className="mb-5 text-sm leading-relaxed text-white/45">
+              Making healthcare accessible by connecting patients with top-rated doctors.
             </p>
-            <div className="flex flex-wrap gap-3">
-              {socialLinks.map((social) => (
+            <div className="flex flex-wrap gap-2.5">
+              {socialLinks.map((s) => (
                 <a
-                  key={social.name}
-                  href={social.href}
-                  className="flex h-11 min-h-11 w-11 min-w-11 items-center justify-center rounded-lg border border-forest/15 bg-forest/10 text-white/40 transition-all duration-200 hover:border-forest/35 hover:text-forest-light"
-                  aria-label={social.name}
+                  key={s.name}
+                  href={s.href}
+                  className="tap-raise flex h-10 w-10 items-center justify-center rounded-xl border border-[#346739]/22 bg-[#0a1d11]/60 text-white/55 transition-all duration-200 hover:border-[#5aad68]/55 hover:text-[#b8e8bf]"
+                  aria-label={s.name}
                 >
-                  <social.icon className="w-4 h-4" />
+                  <s.icon className="h-4 w-4" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Company */}
-          <div>
-            <h3 className="font-semibold text-white/70 mb-4 text-sm uppercase tracking-wider">Company</h3>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-white/40 hover:text-forest-light transition-colors duration-200"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Desktop link columns */}
+          <div className="hidden md:col-span-3 md:grid md:grid-cols-3 md:gap-10">
+            {(Object.keys(footerLinks) as GroupKey[]).map((g) => (
+              <div key={g}>
+                <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/65">
+                  {groupLabels[g]}
+                </h3>
+                <ul className="space-y-3">
+                  {footerLinks[g].map((link) => (
+                    <li key={link.name}>
+                      <Link
+                        to={link.href}
+                        className="text-sm text-white/45 transition-colors duration-200 hover:text-[#b8e8bf]"
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
 
-          {/* Support */}
-          <div>
-            <h3 className="font-semibold text-white/70 mb-4 text-sm uppercase tracking-wider">Support</h3>
-            <ul className="space-y-3">
-              {footerLinks.support.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-white/40 hover:text-forest-light transition-colors duration-200"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+          {/* Mobile accordion */}
+          <div className="md:hidden">
+            <ul className="divide-y divide-[#346739]/15 border-y border-[#346739]/15">
+              {(Object.keys(footerLinks) as GroupKey[]).map((g) => {
+                const isOpen = openGroup === g;
+                return (
+                  <li key={g}>
+                    <button
+                      type="button"
+                      onClick={() => toggle(g)}
+                      aria-expanded={isOpen}
+                      aria-controls={`footer-group-${g}`}
+                      className="flex w-full items-center justify-between py-4 text-left"
+                    >
+                      <span
+                        className={cn(
+                          'text-sm font-semibold uppercase tracking-wider transition-colors',
+                          isOpen ? 'text-white' : 'text-white/70',
+                        )}
+                      >
+                        {groupLabels[g]}
+                      </span>
+                      <motion.span
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.25 }}
+                        className={cn(
+                          'flex h-7 w-7 items-center justify-center rounded-full border transition-colors',
+                          isOpen
+                            ? 'border-[#5aad68]/55 bg-[#346739]/25 text-[#b8e8bf]'
+                            : 'border-white/12 text-white/50',
+                        )}
+                      >
+                        <ChevronDownIcon className="h-4 w-4" />
+                      </motion.span>
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.ul
+                          id={`footer-group-${g}`}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="space-y-1 pb-4">
+                            {footerLinks[g].map((link) => (
+                              <Link
+                                key={link.name}
+                                to={link.href}
+                                className="block rounded-lg px-2 py-2 text-sm text-white/55 transition-colors hover:bg-white/[0.04] hover:text-[#b8e8bf]"
+                              >
+                                {link.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
+                  </li>
+                );
+              })}
             </ul>
-          </div>
 
-          {/* Legal */}
-          <div>
-            <h3 className="font-semibold text-white/70 mb-4 text-sm uppercase tracking-wider">Legal</h3>
-            <ul className="space-y-3">
-              {footerLinks.legal.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-white/40 hover:text-forest-light transition-colors duration-200"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            {/* Mobile contact CTA */}
+            <div className="mt-6 rounded-2xl border border-[#346739]/25 bg-[#0a1d11]/55 p-4">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-[#7bcc84]">
+                Get in touch
+              </p>
+              <p className="mt-1 text-sm text-white/65">
+                We respond within one business day.
+              </p>
+              <a
+                href="mailto:support@medlyst.com"
+                className="tap-raise mt-3 inline-flex w-full min-h-11 items-center justify-center rounded-xl bg-[#346739] text-sm font-semibold text-white shadow-glow-sm hover:bg-[#3f8548]"
+              >
+                support@medlyst.com
+              </a>
+            </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-forest/8">
-          <p className="text-center text-sm text-white/30">
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-[#346739]/15 pt-6 text-center sm:flex-row sm:text-left">
+          <p className="text-xs text-white/35 sm:text-sm">
             © {new Date().getFullYear()} Medlyst. All rights reserved.
+          </p>
+          <p className="text-xs text-white/30 sm:text-sm">
+            Crafted with care for better healthcare
           </p>
         </div>
       </Container>

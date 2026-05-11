@@ -143,38 +143,50 @@ export const BookingModal = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-foreground/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/70 backdrop-blur-md"
             onClick={handleClose}
           />
 
-          {/* Modal */}
+          {/* Modal — bottom sheet on mobile, dialog on tablet+ */}
           <motion.div
             ref={modalRef}
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.2 }}
-            className="relative flex max-h-[100dvh] w-full max-w-lg flex-col overflow-hidden rounded-none bg-card shadow-lift sm:max-h-[90vh] sm:rounded-2xl"
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 60 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="glass-card relative flex max-h-[92dvh] w-full max-w-lg flex-col overflow-hidden rounded-t-3xl border-x-0 border-b-0 border-t border-[#346739]/35 shadow-lift sm:max-h-[90vh] sm:rounded-3xl sm:border"
           >
+            {/* Mobile grabber */}
+            <div className="flex shrink-0 justify-center pt-2 sm:hidden">
+              <span className="h-1.5 w-10 rounded-full bg-white/15" />
+            </div>
+
             {/* Header */}
-            <div className="flex shrink-0 items-start justify-between gap-3 border-b border-border p-4 pt-[max(1rem,env(safe-area-inset-top))] sm:items-center sm:p-6 sm:pt-6">
+            <div className="flex shrink-0 items-start justify-between gap-3 border-b border-[#346739]/15 p-4 pt-3 sm:items-center sm:p-6 sm:pt-6">
               <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
                 <img
                   src={selectedDoctor.photoUrl}
                   alt={selectedDoctor.name}
-                  className="h-11 w-11 shrink-0 rounded-xl object-cover sm:h-12 sm:w-12"
+                  className="h-11 w-11 shrink-0 rounded-xl border border-[#346739]/30 object-cover sm:h-12 sm:w-12"
                 />
                 <div className="min-w-0">
-                  <h2 id="booking-modal-title" className="truncate text-sm font-semibold text-foreground sm:text-base">
-                    {step === 'success' ? 'Booking Confirmed!' : `Book with ${selectedDoctor.name}`}
+                  <h2
+                    id="booking-modal-title"
+                    className="truncate text-sm font-semibold text-white sm:text-base"
+                  >
+                    {step === 'success'
+                      ? 'Booking Confirmed!'
+                      : `Book with ${selectedDoctor.name}`}
                   </h2>
-                  <p className="truncate text-xs text-muted-foreground sm:text-sm">{selectedDoctor.specialty}</p>
+                  <p className="truncate text-xs text-[#7bcc84]/80 sm:text-sm">
+                    {selectedDoctor.specialty}
+                  </p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={handleClose}
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-muted touch-manipulation"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#346739]/25 bg-[#0a1d11]/60 text-white/65 transition-colors hover:border-[#5aad68]/55 hover:text-white touch-manipulation"
                 aria-label="Close modal"
               >
                 <XMarkIcon className="h-5 w-5" />
@@ -187,30 +199,37 @@ export const BookingModal = () => {
                 <div className="space-y-6">
                   {/* Date Selection */}
                   <div>
-                    <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
-                      <CalendarIcon className="w-5 h-5" />
+                    <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-white/65">
+                      <CalendarIcon className="h-4 w-4 text-[#7bcc84]" />
                       Select Date
                     </h3>
                     <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
-                      {selectedDoctor.availableSlots.slice(0, 10).map((slot) => (
-                        <button
-                          key={slot.date}
-                          onClick={() => setSelectedDate(slot.date)}
-                          className={cn(
-                            'min-h-[3.25rem] rounded-xl p-2 text-center transition-all sm:min-h-0 sm:p-3',
-                            selectedDate === slot.date
-                              ? "bg-primary text-primary-foreground"
-                              : "bg-muted hover:bg-muted/80"
-                          )}
-                        >
-                          <div className="text-xs font-medium">
-                            {isToday(slot.date) ? 'Today' : isTomorrow(slot.date) ? 'Tomorrow' : getDayName(slot.date)}
-                          </div>
-                          <div className="text-lg font-bold">
-                            {new Date(slot.date).getDate()}
-                          </div>
-                        </button>
-                      ))}
+                      {selectedDoctor.availableSlots.slice(0, 10).map((slot) => {
+                        const active = selectedDate === slot.date;
+                        return (
+                          <button
+                            key={slot.date}
+                            onClick={() => setSelectedDate(slot.date)}
+                            className={cn(
+                              'tap-raise min-h-[3.25rem] rounded-xl border p-2 text-center transition-all sm:min-h-0 sm:p-3',
+                              active
+                                ? 'border-[#5aad68]/60 bg-[#346739]/35 text-white shadow-glow-sm'
+                                : 'border-[#346739]/25 bg-[#0a1d11]/55 text-white/70 hover:border-[#5aad68]/40 hover:text-white',
+                            )}
+                          >
+                            <div className="text-[11px] font-medium uppercase tracking-wider">
+                              {isToday(slot.date)
+                                ? 'Today'
+                                : isTomorrow(slot.date)
+                                  ? 'Tomorrow'
+                                  : getDayName(slot.date)}
+                            </div>
+                            <div className="text-lg font-bold">
+                              {new Date(slot.date).getDate()}
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 
@@ -220,27 +239,30 @@ export const BookingModal = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                     >
-                      <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
-                        <ClockIcon className="w-5 h-5" />
+                      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-white/65">
+                        <ClockIcon className="h-4 w-4 text-[#7bcc84]" />
                         Select Time
                       </h3>
                       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
                         {selectedDoctor.availableSlots
                           .find((s) => s.date === selectedDate)
-                          ?.times.map((slotTime) => (
-                            <button
-                              key={slotTime.time + slotTime.slotId}
-                              onClick={() => setSelectedTime(slotTime)}
-                              className={cn(
-                                'min-h-11 rounded-lg px-3 py-2 text-sm font-medium transition-all sm:min-h-10',
-                                selectedTime?.time === slotTime.time
-                                  ? "bg-primary text-primary-foreground"
-                                  : "bg-muted hover:bg-muted/80"
-                              )}
-                            >
-                              {formatTime(slotTime.time)}
-                            </button>
-                          ))}
+                          ?.times.map((slotTime) => {
+                            const active = selectedTime?.time === slotTime.time;
+                            return (
+                              <button
+                                key={slotTime.time + slotTime.slotId}
+                                onClick={() => setSelectedTime(slotTime)}
+                                className={cn(
+                                  'tap-raise min-h-11 rounded-lg border px-3 py-2 text-sm font-medium transition-all sm:min-h-10',
+                                  active
+                                    ? 'border-[#5aad68]/60 bg-[#346739]/35 text-white shadow-glow-sm'
+                                    : 'border-[#346739]/25 bg-[#0a1d11]/55 text-white/70 hover:border-[#5aad68]/40 hover:text-white',
+                                )}
+                              >
+                                {formatTime(slotTime.time)}
+                              </button>
+                            );
+                          })}
                       </div>
                     </motion.div>
                   )}
@@ -250,107 +272,125 @@ export const BookingModal = () => {
               {step === 'form' && (
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                   {/* Selected DateTime Summary */}
-                  <div className="flex gap-2 mb-4">
-                    <Badge variant="secondary">
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    <Badge variant="secondary" className="border border-[#346739]/30 bg-[#346739]/22 text-[#b8e8bf]">
                       {selectedDate && formatDate(selectedDate)}
                     </Badge>
-                    <Badge variant="secondary">
+                    <Badge variant="secondary" className="border border-[#346739]/30 bg-[#346739]/22 text-[#b8e8bf]">
                       {selectedTime && formatTime(selectedTime.time)}
                     </Badge>
                   </div>
 
                   <div>
-                    <label htmlFor="patientName" className="block text-sm font-medium text-foreground mb-1">
+                    <label
+                      htmlFor="patientName"
+                      className="mb-1.5 block text-sm font-medium text-white/80"
+                    >
                       Full Name
                     </label>
                     <input
                       id="patientName"
                       type="text"
                       {...register('patientName')}
-                      className="min-h-11 w-full rounded-xl bg-muted px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 md:text-sm"
-                      placeholder="John Doe"
+                      className="input-dark md:text-sm"
+                      placeholder="Jane Doe"
                     />
                     {errors.patientName && (
-                      <p className="text-sm text-destructive mt-1">{errors.patientName.message}</p>
+                      <p className="mt-1 text-xs text-red-400">{errors.patientName.message}</p>
                     )}
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">
+                    <label
+                      htmlFor="email"
+                      className="mb-1.5 block text-sm font-medium text-white/80"
+                    >
                       Email Address
                     </label>
                     <input
                       id="email"
                       type="email"
                       {...register('email')}
-                      className="min-h-11 w-full rounded-xl bg-muted px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 md:text-sm"
-                      placeholder="john@example.com"
+                      className="input-dark md:text-sm"
+                      placeholder="jane@example.com"
                     />
                     {errors.email && (
-                      <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
+                      <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>
                     )}
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-1">
+                    <label
+                      htmlFor="phone"
+                      className="mb-1.5 block text-sm font-medium text-white/80"
+                    >
                       Phone Number
                     </label>
                     <input
                       id="phone"
                       type="tel"
                       {...register('phone')}
-                      className="min-h-11 w-full rounded-xl bg-muted px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 md:text-sm"
+                      className="input-dark md:text-sm"
                       placeholder="+1 (555) 123-4567"
                     />
                     {errors.phone && (
-                      <p className="text-sm text-destructive mt-1">{errors.phone.message}</p>
+                      <p className="mt-1 text-xs text-red-400">{errors.phone.message}</p>
                     )}
                   </div>
 
                   <div>
-                    <label htmlFor="reason" className="block text-sm font-medium text-foreground mb-1">
+                    <label
+                      htmlFor="reason"
+                      className="mb-1.5 block text-sm font-medium text-white/80"
+                    >
                       Reason for Visit
                     </label>
                     <textarea
                       id="reason"
                       {...register('reason')}
                       rows={3}
-                      className="min-h-[5.5rem] w-full resize-none rounded-xl bg-muted px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 md:text-sm"
+                      className="input-dark md:text-sm"
                       placeholder="Briefly describe your symptoms or reason for the appointment..."
                     />
                     {errors.reason && (
-                      <p className="text-sm text-destructive mt-1">{errors.reason.message}</p>
+                      <p className="mt-1 text-xs text-red-400">{errors.reason.message}</p>
                     )}
                   </div>
                 </form>
               )}
 
               {step === 'success' && (
-                <div className="text-center py-8">
-                  <div className="w-20 h-20 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-6">
-                    <CheckCircleIcon className="w-10 h-10 text-secondary" />
+                <div className="py-6 text-center">
+                  <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#5aad68]/55 bg-[#346739]/25 shadow-glow-md">
+                    <CheckCircleIcon className="h-10 w-10 text-[#7bcc84]" />
                   </div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">
+                  <h3 className="text-xl font-semibold text-white">
                     Appointment Confirmed!
                   </h3>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="mt-1.5 text-sm text-white/55">
                     Your appointment has been scheduled successfully.
                   </p>
-                  <div className="bg-muted rounded-xl p-4 text-left space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Doctor:</span>
-                      <span className="font-medium">{selectedDoctor.name}</span>
+                  <div className="mt-5 space-y-2 rounded-xl border border-[#346739]/22 bg-[#0a1d11]/55 p-4 text-left text-sm">
+                    <div className="flex justify-between gap-3">
+                      <span className="text-white/45">Doctor</span>
+                      <span className="font-medium text-white/90 text-right">
+                        {selectedDoctor.name}
+                      </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Date:</span>
-                      <span className="font-medium">{selectedDate && formatDate(selectedDate)}</span>
+                    <div className="flex justify-between gap-3">
+                      <span className="text-white/45">Date</span>
+                      <span className="font-medium text-white/90 text-right">
+                        {selectedDate && formatDate(selectedDate)}
+                      </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Time:</span>
-                      <span className="font-medium">{selectedTime && formatTime(selectedTime.time)}</span>
+                    <div className="flex justify-between gap-3">
+                      <span className="text-white/45">Time</span>
+                      <span className="font-medium text-white/90 text-right">
+                        {selectedTime && formatTime(selectedTime.time)}
+                      </span>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-4">
+                  <p className="mt-4 text-xs text-white/45">
                     A confirmation email has been sent to your email address.
                   </p>
                 </div>
@@ -358,16 +398,23 @@ export const BookingModal = () => {
             </div>
 
             {/* Footer */}
-            <div className="flex shrink-0 flex-col gap-2 border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:flex-row sm:gap-3 sm:p-6 sm:pb-6">
+            <div
+              className="flex shrink-0 flex-col gap-2 border-t border-[#346739]/15 bg-[#061509]/55 p-4 sm:flex-row sm:gap-3 sm:p-6"
+              style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+            >
               {step === 'datetime' && (
                 <>
-                  <Button variant="outline" onClick={handleClose} className="min-h-12 flex-1 sm:min-h-10">
+                  <Button
+                    variant="outline"
+                    onClick={handleClose}
+                    className="min-h-12 flex-1 rounded-xl border-[#346739]/35 bg-transparent text-white/75 hover:border-[#5aad68]/55 hover:bg-[#346739]/12 hover:text-white sm:min-h-11"
+                  >
                     Cancel
                   </Button>
                   <Button
                     onClick={() => setStep('form')}
                     disabled={!selectedDate || !selectedTime}
-                    className="min-h-12 flex-1 sm:min-h-10"
+                    className="tap-raise min-h-12 flex-1 rounded-xl bg-[#346739] font-semibold text-white shadow-glow-sm hover:bg-[#3f8548] disabled:opacity-50 sm:min-h-11"
                   >
                     Continue
                   </Button>
@@ -376,13 +423,17 @@ export const BookingModal = () => {
 
               {step === 'form' && (
                 <>
-                  <Button variant="outline" onClick={() => setStep('datetime')} className="min-h-12 flex-1 sm:min-h-10">
+                  <Button
+                    variant="outline"
+                    onClick={() => setStep('datetime')}
+                    className="min-h-12 flex-1 rounded-xl border-[#346739]/35 bg-transparent text-white/75 hover:border-[#5aad68]/55 hover:bg-[#346739]/12 hover:text-white sm:min-h-11"
+                  >
                     Back
                   </Button>
                   <Button
                     onClick={handleSubmit(onSubmit)}
                     disabled={isSubmitting}
-                    className="min-h-12 flex-1 sm:min-h-10"
+                    className="tap-raise min-h-12 flex-1 rounded-xl bg-[#346739] font-semibold text-white shadow-glow-sm hover:bg-[#3f8548] disabled:opacity-60 sm:min-h-11"
                   >
                     {isSubmitting ? 'Booking...' : 'Confirm Booking'}
                   </Button>
@@ -390,7 +441,10 @@ export const BookingModal = () => {
               )}
 
               {step === 'success' && (
-                <Button onClick={handleClose} className="min-h-12 w-full sm:min-h-10">
+                <Button
+                  onClick={handleClose}
+                  className="tap-raise min-h-12 w-full rounded-xl bg-[#346739] font-semibold text-white shadow-glow-sm hover:bg-[#3f8548] sm:min-h-11"
+                >
                   Done
                 </Button>
               )}

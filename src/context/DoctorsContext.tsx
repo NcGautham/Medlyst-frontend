@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { Doctor, doctors as mockDoctors } from '@/data/doctors';
 import { getDoctors, getSlots, Doctor as ApiDoctor, Slot as ApiSlot } from '@/api/helpers';
 
@@ -58,7 +58,7 @@ export const DoctorsProvider: React.FC<{ children: ReactNode }> = ({ children })
         };
     };
 
-    const refreshDoctors = async () => {
+    const refreshDoctors = useCallback(async () => {
         setIsLoading(true);
         try {
             // Fetch data in parallel
@@ -137,11 +137,11 @@ export const DoctorsProvider: React.FC<{ children: ReactNode }> = ({ children })
         } finally {
             setIsLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         refreshDoctors();
-    }, []);
+    }, [refreshDoctors]);
 
     const addDoctor = (doctor: Doctor) => {
         setDoctors(prev => [...prev, doctor]);

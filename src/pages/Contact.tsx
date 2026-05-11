@@ -5,7 +5,13 @@ import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { EnvelopeIcon, PhoneIcon, MapPinIcon } from '@heroicons/react/24/outline';
+import {
+  EnvelopeIcon,
+  PhoneIcon,
+  MapPinIcon,
+  PaperAirplaneIcon,
+} from '@heroicons/react/24/outline';
+import { Reveal } from '@/components/Reveal';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(100),
@@ -15,6 +21,27 @@ const contactSchema = z.object({
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
+
+const contactCards = [
+  {
+    icon: EnvelopeIcon,
+    title: 'Email',
+    value: 'support@medlyst.com',
+    href: 'mailto:support@medlyst.com',
+  },
+  {
+    icon: PhoneIcon,
+    title: 'Phone',
+    value: '+1 (555) 123-4567',
+    href: 'tel:+15551234567',
+  },
+  {
+    icon: MapPinIcon,
+    title: 'Address',
+    value: '123 Healthcare Ave, San Francisco, CA 94102',
+    href: null as string | null,
+  },
+];
 
 const Contact = () => {
   const {
@@ -26,166 +53,179 @@ const Contact = () => {
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = async (data: ContactFormData) => {
-    // Simulate API call
+  const onSubmit = async (_data: ContactFormData) => {
+    // TODO: wire to backend / EmailJS — currently shows a mock success toast.
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    
+
     toast({
       title: 'Message Sent!',
       description: "Thank you for reaching out. We'll get back to you soon.",
     });
-    
+
     reset();
   };
 
   return (
-    <main className="min-h-screen bg-muted pb-12 pt-24 sm:pb-16 sm:pt-28">
-      <Container size="lg">
+    <main className="relative min-h-screen overflow-x-hidden bg-background pb-12 pt-20 sm:pb-16 sm:pt-28">
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="orb orb-green-lg absolute -top-24 right-[-120px] h-[360px] w-[360px] opacity-50" />
+        <div className="orb orb-green-sm absolute bottom-[10%] left-[-100px] h-[280px] w-[280px] opacity-40" />
+      </div>
+
+      <Container size="lg" className="relative z-10">
+        {/* ── Page header ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center max-w-3xl mx-auto mb-12"
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-auto mb-8 max-w-3xl text-center sm:mb-12"
         >
-          <h1 className="mb-6 text-3xl font-bold text-foreground sm:text-4xl md:text-5xl">
-            Get in Touch
+          <div className="eyebrow-pill mb-4">
+            <span className="dot" /> Get in touch
+          </div>
+          <h1 className="page-heading">
+            We're here to <span className="text-gradient">help</span>
           </h1>
-          <p className="text-lg text-muted-foreground">
-            Have questions or feedback? We'd love to hear from you. 
-            Our team is here to help.
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/55 sm:mt-4 sm:text-base md:text-lg">
+            Questions about a booking, your account, or partnering with us?
+            Drop a note and our team will respond within one business day.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-1 space-y-6"
-          >
-            <div className="bg-card rounded-2xl shadow-soft p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                  <EnvelopeIcon className="w-6 h-6 text-secondary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">Email</h3>
-                  <p className="text-muted-foreground text-sm">support@medlyst.com</p>
-                </div>
-              </div>
+        <div className="grid gap-5 sm:gap-6 lg:grid-cols-3 lg:gap-8">
+          {/* ── Contact info cards ── */}
+          <Reveal direction="right" className="lg:col-span-1">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-1">
+              {contactCards.map((c, i) => {
+                const isAddress = c.title === 'Address';
+                const Inner = (
+                  <div
+                    className={`glass-card tap-raise flex h-full items-start gap-3.5 rounded-2xl p-4 sm:gap-4 sm:p-5 ${
+                      isAddress ? 'sm:col-span-2 lg:col-span-1' : ''
+                    }`}
+                  >
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#346739]/30 bg-[#346739]/15">
+                      <c.icon className="h-5 w-5 text-[#7bcc84]" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-[11px] font-semibold uppercase tracking-wider text-white/55">
+                        {c.title}
+                      </h3>
+                      <p className="mt-0.5 break-words text-sm leading-snug text-white/90">
+                        {c.value}
+                      </p>
+                    </div>
+                  </div>
+                );
+                const wrapperClass = isAddress ? 'sm:col-span-2 lg:col-span-1' : '';
+                return c.href ? (
+                  <a key={i} href={c.href} className={`block ${wrapperClass}`}>
+                    {Inner}
+                  </a>
+                ) : (
+                  <div key={i} className={wrapperClass}>
+                    {Inner}
+                  </div>
+                );
+              })}
             </div>
+          </Reveal>
 
-            <div className="bg-card rounded-2xl shadow-soft p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                  <PhoneIcon className="w-6 h-6 text-secondary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">Phone</h3>
-                  <p className="text-muted-foreground text-sm">+1 (555) 123-4567</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-card rounded-2xl shadow-soft p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                  <MapPinIcon className="w-6 h-6 text-secondary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">Address</h3>
-                  <p className="text-muted-foreground text-sm">
-                    123 Healthcare Ave<br />
-                    San Francisco, CA 94102
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="lg:col-span-2"
-          >
+          {/* ── Form ── */}
+          <Reveal direction="left" delay={0.1} className="lg:col-span-2">
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="bg-card rounded-2xl shadow-soft p-6 md:p-8 space-y-6"
+              className="glass-card card-accent-line space-y-4 rounded-2xl p-4 sm:space-y-5 sm:rounded-3xl sm:p-7 md:p-9"
             >
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                  <label
+                    htmlFor="name"
+                    className="mb-1.5 block text-sm font-medium text-white/80"
+                  >
                     Full Name
                   </label>
                   <input
                     id="name"
                     type="text"
                     {...register('name')}
-                    className="w-full px-4 py-3 bg-muted rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
-                    placeholder="John Doe"
+                    className="input-dark"
+                    placeholder="Jane Doe"
                   />
                   {errors.name && (
-                    <p className="text-sm text-destructive mt-1">{errors.name.message}</p>
+                    <p className="mt-1.5 text-xs text-red-400">{errors.name.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                  <label
+                    htmlFor="email"
+                    className="mb-1.5 block text-sm font-medium text-white/80"
+                  >
                     Email Address
                   </label>
                   <input
                     id="email"
                     type="email"
                     {...register('email')}
-                    className="w-full px-4 py-3 bg-muted rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
-                    placeholder="john@example.com"
+                    className="input-dark"
+                    placeholder="jane@example.com"
                   />
                   {errors.email && (
-                    <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
+                    <p className="mt-1.5 text-xs text-red-400">{errors.email.message}</p>
                   )}
                 </div>
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
+                <label
+                  htmlFor="subject"
+                  className="mb-1.5 block text-sm font-medium text-white/80"
+                >
                   Subject
                 </label>
                 <input
                   id="subject"
                   type="text"
                   {...register('subject')}
-                  className="w-full px-4 py-3 bg-muted rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="input-dark"
                   placeholder="How can we help?"
                 />
                 {errors.subject && (
-                  <p className="text-sm text-destructive mt-1">{errors.subject.message}</p>
+                  <p className="mt-1.5 text-xs text-red-400">{errors.subject.message}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                <label
+                  htmlFor="message"
+                  className="mb-1.5 block text-sm font-medium text-white/80"
+                >
                   Message
                 </label>
                 <textarea
                   id="message"
                   {...register('message')}
                   rows={5}
-                  className="w-full px-4 py-3 bg-muted rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none"
+                  className="input-dark"
                   placeholder="Tell us more about your inquiry..."
                 />
                 {errors.message && (
-                  <p className="text-sm text-destructive mt-1">{errors.message.message}</p>
+                  <p className="mt-1.5 text-xs text-red-400">{errors.message.message}</p>
                 )}
               </div>
 
-              <Button type="submit" size="lg" disabled={isSubmitting}>
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isSubmitting}
+                className="tap-raise inline-flex w-full min-h-12 items-center justify-center rounded-xl bg-[#346739] font-semibold text-white shadow-glow-sm transition-all hover:bg-[#3f8548] hover:brightness-110 disabled:opacity-60 sm:w-auto sm:px-10"
+              >
+                <PaperAirplaneIcon className="mr-2 h-4 w-4" />
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </Button>
             </form>
-          </motion.div>
+          </Reveal>
         </div>
       </Container>
     </main>

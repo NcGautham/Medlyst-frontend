@@ -15,69 +15,73 @@ export const DoctorCard = ({ doctor }: DoctorCardProps) => {
   return (
     <motion.div
       transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl glass-card card-accent-line transition-transform duration-200 active:scale-[0.99] md:hover:-translate-y-1 md:hover:shadow-lg"
+      className="group glow-ring card-sheen relative flex h-full flex-col overflow-hidden rounded-2xl glass-card card-accent-line tap-raise transition-all duration-300 md:hover:-translate-y-1 md:hover:shadow-[0_18px_50px_rgba(0,0,0,0.55),0_0_28px_rgba(52,103,57,0.18)]"
     >
-      <div className="flex h-full flex-col p-5 sm:p-6">
+      <div className="relative z-[1] flex h-full flex-col p-4 sm:p-6">
         {/* Doctor info row */}
-        <div className="flex items-start gap-4">
-          <div className="relative flex-shrink-0">
+        <div className="flex items-start gap-3.5 sm:gap-4">
+          <div className="relative flex-shrink-0 overflow-hidden rounded-2xl">
             <img
               src={doctor.photoUrl}
               alt={doctor.name}
-              className="w-20 h-20 rounded-2xl object-cover border border-forest/20 bg-forest-dark/45"
+              className="h-16 w-16 rounded-2xl border border-[#346739]/20 bg-[#061509]/55 object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08] sm:h-20 sm:w-20"
               loading="lazy"
             />
-            {/* Green online dot */}
-            <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-forest-light rounded-full border-2 border-[hsl(150,55%,3%)] shadow-glow-sm" />
+            <span className="pointer-events-none absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border-2 border-[hsl(150,55%,3%)] bg-[#7bcc84] shadow-glow-sm sm:h-4 sm:w-4" />
           </div>
 
-          <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-white/90 truncate group-hover:text-forest-soft transition-colors duration-200">
+          <div className="min-w-0 flex-1">
+            <h3 className="truncate font-semibold text-white/90 transition-colors duration-200 group-hover:text-[#b0e0b6]">
               {doctor.name}
             </h3>
-            <p className="text-sm text-forest-light/80 mt-0.5">{doctor.specialty}</p>
-            <div className="flex items-center gap-1 mt-2">
-              <StarIcon className="w-4 h-4 text-amber-400 flex-shrink-0" />
-              <span className="text-sm font-semibold text-white/80">{doctor.rating}</span>
+            <p className="mt-0.5 text-sm text-[#7bcc84]/85">{doctor.specialty}</p>
+            <div className="mt-2 flex items-center gap-1">
+              <StarIcon className="h-4 w-4 flex-shrink-0 text-amber-400" />
+              <span className="text-sm font-semibold text-white/85">
+                {doctor.rating}
+              </span>
               <span className="text-xs text-white/40">({doctor.reviewCount})</span>
             </div>
           </div>
         </div>
 
         {/* Hospital */}
-        <div className="flex items-center gap-2 mt-4 text-sm text-white/40">
-          <MapPinIcon className="w-4 h-4 flex-shrink-0 text-forest/60" />
+        <div className="mt-3.5 flex items-center gap-2 text-sm text-white/45 sm:mt-4">
+          <MapPinIcon className="h-4 w-4 flex-shrink-0 text-[#7bcc84]/80" />
           <span className="truncate">{doctor.hospital}</span>
         </div>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mt-4">
+        <div className="mt-3.5 flex flex-wrap gap-1.5">
           {doctor.tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-forest/10 text-forest-soft/80 border border-forest/15"
+              className="rounded-full border border-[#346739]/20 bg-[#346739]/12 px-2.5 py-0.5 text-[11px] font-medium text-[#98d4a0]/85"
             >
               {tag}
             </span>
           ))}
         </div>
 
+        {/* spacer to push CTAs to the bottom */}
+        <div className="flex-1" />
+
         {/* Divider */}
         <div className="mt-4 border-t border-white/5" />
 
         {/* Action buttons */}
-        <div className="mt-4 flex flex-col gap-2.5 sm:flex-row sm:gap-3">
+        <div className="mt-4 grid grid-cols-2 gap-2.5">
           <Button
             variant="outline"
             size="sm"
-            className="min-h-11 flex-1 border-forest/20 bg-transparent text-white/60 hover:border-forest/40 hover:bg-forest/8 hover:text-forest-soft sm:min-h-9"
+            className="min-h-11 rounded-xl border-[#346739]/25 bg-transparent text-white/65 hover:border-[#5aad68]/45 hover:bg-[#346739]/12 hover:text-[#b0e0b6] sm:min-h-10"
             asChild
           >
             <Link to={`/doctor/${doctor.id}`}>Profile</Link>
           </Button>
           <Button
             size="sm"
-            className="min-h-11 flex-1 border border-forest/30 bg-forest/20 text-forest-soft shadow-glow-sm hover:border-forest-light/50 hover:bg-forest/30 hover:text-white sm:min-h-9"
+            className="min-h-11 rounded-xl border border-[#5aad68]/45 bg-[#346739]/35 text-[#dff6e2] shadow-glow-sm hover:border-[#5aad68]/65 hover:bg-[#3f8548] hover:text-white sm:min-h-10"
             onClick={() => openBookingModal(doctor)}
           >
             Book Now

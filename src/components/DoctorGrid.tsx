@@ -12,19 +12,17 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.07,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 22 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.4,
-    },
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
@@ -35,24 +33,25 @@ export const DoctorGrid = ({ doctors, loading = false }: DoctorGridProps) => {
         {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="bg-card rounded-2xl shadow-soft p-6 animate-pulse"
+            className="glass-card relative overflow-hidden rounded-2xl p-5"
           >
-            <div className="flex items-start gap-4">
-              <div className="w-20 h-20 rounded-2xl bg-muted" />
+            <div className="shimmer-dark absolute inset-0 opacity-60" aria-hidden />
+            <div className="relative flex items-start gap-4">
+              <div className="h-16 w-16 rounded-2xl bg-[#346739]/15 sm:h-20 sm:w-20" />
               <div className="flex-1 space-y-2">
-                <div className="h-4 bg-muted rounded w-3/4" />
-                <div className="h-3 bg-muted rounded w-1/2" />
-                <div className="h-3 bg-muted rounded w-1/4" />
+                <div className="h-3.5 w-3/4 rounded bg-[#346739]/15" />
+                <div className="h-3 w-1/2 rounded bg-[#346739]/12" />
+                <div className="h-3 w-1/3 rounded bg-[#346739]/10" />
               </div>
             </div>
-            <div className="mt-4 h-3 bg-muted rounded w-2/3" />
-            <div className="flex gap-2 mt-4">
-              <div className="h-6 bg-muted rounded-full w-16" />
-              <div className="h-6 bg-muted rounded-full w-16" />
+            <div className="relative mt-4 h-3 w-2/3 rounded bg-[#346739]/12" />
+            <div className="relative mt-4 flex gap-2">
+              <div className="h-6 w-16 rounded-full bg-[#346739]/10" />
+              <div className="h-6 w-16 rounded-full bg-[#346739]/10" />
             </div>
-            <div className="flex gap-2 mt-6">
-              <div className="h-9 bg-muted rounded flex-1" />
-              <div className="h-9 bg-muted rounded flex-1" />
+            <div className="relative mt-6 flex gap-2">
+              <div className="h-9 flex-1 rounded-lg bg-[#346739]/12" />
+              <div className="h-9 flex-1 rounded-lg bg-[#346739]/15" />
             </div>
           </div>
         ))}
@@ -62,8 +61,13 @@ export const DoctorGrid = ({ doctors, loading = false }: DoctorGridProps) => {
 
   if (doctors.length === 0) {
     return (
-      <div className="text-center py-12">
-        <p className="text-lg text-muted-foreground">No doctors found matching your criteria.</p>
+      <div className="glass-card mx-auto max-w-md rounded-2xl px-6 py-10 text-center">
+        <p className="text-base font-medium text-white/85">
+          No doctors found
+        </p>
+        <p className="mt-2 text-sm text-white/55">
+          Try clearing some filters or searching for a different specialty.
+        </p>
       </div>
     );
   }
