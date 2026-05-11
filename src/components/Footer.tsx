@@ -60,31 +60,29 @@ function InstagramIcon({ className }: { className?: string }) {
 
 export const Footer = () => {
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <footer className="glass-nav border-t border-emerald-500/10 text-white/80">
       <Container size="lg" className="py-12 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <img
-                src="/logo.png"
-                alt="Medlyst"
-                className="w-10 h-10 object-contain rounded-xl bg-white p-1"
-              />
-              <span className="text-xl font-bold">Medlyst</span>
+            <Link to="/" className="flex items-center gap-2 mb-4 group">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center group-hover:border-emerald-400/50 transition-colors">
+                <img src="/logo.png" alt="Medlyst" className="w-7 h-7 object-contain" />
+              </div>
+              <span className="text-xl font-bold text-white">Medlyst</span>
             </Link>
-            <p className="text-primary-foreground/70 text-sm leading-relaxed mb-6">
+            <p className="text-white/40 text-sm leading-relaxed mb-6">
               Making healthcare accessible by connecting patients with top-rated doctors effortlessly.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
-                  className="text-primary-foreground/60 hover:text-accent transition-colors"
+                  className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center text-white/40 hover:text-emerald-400 hover:border-emerald-500/35 transition-all duration-200"
                   aria-label={social.name}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="w-4 h-4" />
                 </a>
               ))}
             </div>
@@ -92,13 +90,13 @@ export const Footer = () => {
 
           {/* Company */}
           <div>
-            <h3 className="font-semibold mb-4">Company</h3>
+            <h3 className="font-semibold text-white/70 mb-4 text-sm uppercase tracking-wider">Company</h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-sm text-primary-foreground/70 hover:text-accent transition-colors"
+                    className="text-sm text-white/40 hover:text-emerald-400 transition-colors duration-200"
                   >
                     {link.name}
                   </Link>
@@ -109,13 +107,13 @@ export const Footer = () => {
 
           {/* Support */}
           <div>
-            <h3 className="font-semibold mb-4">Support</h3>
+            <h3 className="font-semibold text-white/70 mb-4 text-sm uppercase tracking-wider">Support</h3>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-sm text-primary-foreground/70 hover:text-accent transition-colors"
+                    className="text-sm text-white/40 hover:text-emerald-400 transition-colors duration-200"
                   >
                     {link.name}
                   </Link>
@@ -126,13 +124,13 @@ export const Footer = () => {
 
           {/* Legal */}
           <div>
-            <h3 className="font-semibold mb-4">Legal</h3>
+            <h3 className="font-semibold text-white/70 mb-4 text-sm uppercase tracking-wider">Legal</h3>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-sm text-primary-foreground/70 hover:text-accent transition-colors"
+                    className="text-sm text-white/40 hover:text-emerald-400 transition-colors duration-200"
                   >
                     {link.name}
                   </Link>
@@ -142,8 +140,8 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-primary-foreground/10">
-          <p className="text-center text-sm text-primary-foreground/60">
+        <div className="mt-12 pt-8 border-t border-emerald-500/8">
+          <p className="text-center text-sm text-white/30">
             © {new Date().getFullYear()} Medlyst. All rights reserved.
           </p>
         </div>

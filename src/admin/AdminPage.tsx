@@ -16,7 +16,7 @@ const AdminPage = () => {
   };
 
   return (
-    <main className="min-h-screen pt-24 pb-16 bg-background">
+    <main className="bg-background pt-28 pb-20">
       <Container>
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold text-foreground">Admin Panel</h1>

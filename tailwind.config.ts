@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -73,9 +74,13 @@ export default {
         "3xl": "2rem",
       },
       boxShadow: {
-        soft: "0 4px 20px -2px rgba(0, 0, 0, 0.08)",
-        card: "0 8px 30px -4px rgba(0, 0, 0, 0.1)",
-        lift: "0 12px 40px -8px rgba(0, 0, 0, 0.15)",
+        soft: "0 4px 20px -2px rgba(0, 0, 0, 0.5)",
+        card: "0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.04)",
+        lift: "0 12px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(34, 197, 94, 0.09)",
+        "glow-sm":  "0 0 12px rgba(34, 197, 94, 0.25)",
+        "glow-md":  "0 0 20px rgba(34, 197, 94, 0.38), 0 0 60px rgba(34, 197, 94, 0.13)",
+        "glow-lg":  "0 0 40px rgba(34, 197, 94, 0.45), 0 0 100px rgba(34, 197, 94, 0.18)",
+        "inner-glow": "inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(34, 197, 94, 0.06)",
       },
       keyframes: {
         "accordion-down": {
@@ -123,5 +128,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

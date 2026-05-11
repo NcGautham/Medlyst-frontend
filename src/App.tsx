@@ -1,3 +1,11 @@
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useState,
+  type ComponentType,
+  type LazyExoticComponent,
+} from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +15,7 @@ import { BookingProvider } from "@/context/BookingContext";
 import { DoctorsProvider } from "@/context/DoctorsContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { BookingModal } from "@/components/BookingModal";
 import Home from "./pages/Home";
 import Doctors from "./pages/Doctors";
@@ -29,14 +38,32 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 const queryClient = new QueryClient();
 
-const App = () => (
+const App = () => {
+  const [DevToolbar, setDevToolbar] = useState<LazyExoticComponent<
+    ComponentType
+  > | null>(null);
+
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    setDevToolbar(
+      lazy(() => import("@/dev/TwentyFirstToolbarRoot"))
+    );
+  }, []);
+
+  return (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <DoctorsProvider>
         <BookingProvider>
           <Toaster />
           <Sonner />
+          {DevToolbar ? (
+            <Suspense fallback={null}>
+              <DevToolbar />
+            </Suspense>
+          ) : null}
           <BrowserRouter>
+            <ScrollToTop />
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />
@@ -60,6 +87,7 @@ const App = () => (
       </DoctorsProvider>
     </TooltipProvider>
   </QueryClientProvider>
-);
+  );
+};
 
 export default App;

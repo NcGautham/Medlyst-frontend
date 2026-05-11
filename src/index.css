@@ -6,92 +6,77 @@
 
 @layer base {
   :root {
-    --background: 60 20% 98%;
-    --foreground: 160 40% 10%;
+    /* ── Deep-emerald dark palette ── */
+    --background:  150 55% 3%;
+    --foreground:  140 25% 94%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 160 40% 10%;
+    --card:        150 45% 5%;
+    --card-foreground: 140 25% 94%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 160 40% 10%;
+    --popover:     150 45% 6%;
+    --popover-foreground: 140 25% 94%;
 
-    --primary: 155 60% 20%;
-    --primary-foreground: 60 20% 98%;
+    --primary:     142 65% 42%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 155 50% 35%;
-    --secondary-foreground: 60 20% 98%;
+    --secondary:   155 50% 30%;
+    --secondary-foreground: 0 0% 100%;
 
-    --accent: 90 60% 50%;
-    --accent-foreground: 160 40% 10%;
+    --accent:      120 65% 58%;
+    --accent-foreground: 150 55% 5%;
 
-    --muted: 60 10% 94%;
-    --muted-foreground: 160 20% 40%;
+    --muted:       150 30% 9%;
+    --muted-foreground: 140 18% 55%;
 
-    --cream: 60 30% 95%;
-    --cream-foreground: 160 40% 10%;
+    --cream:       150 30% 8%;
+    --cream-foreground: 140 25% 90%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 68% 52%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 160 20% 85%;
-    --input: 160 20% 85%;
-    --ring: 155 60% 25%;
+    --border:      142 38% 15%;
+    --input:       142 38% 13%;
+    /* Match primary green so focus rings / outlines feel on-brand, not cyan */
+    --ring:        142 60% 48%;
 
     --radius: 1rem;
 
-    --gradient-hero-start: 160 60% 12%;
-    --gradient-hero-end: 155 50% 25%;
+    --gradient-hero-start: 150 60% 3%;
+    --gradient-hero-end:   142 55% 14%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 150 45% 5%;
+    --sidebar-foreground: 140 20% 75%;
+    --sidebar-primary: 142 65% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 150 35% 10%;
+    --sidebar-accent-foreground: 140 20% 75%;
+    --sidebar-border: 142 35% 14%;
+    --sidebar-ring: 142 60% 48%;
   }
 
+  /* No separate dark mode — the whole theme is already dark emerald */
   .dark {
-    --background: 160 40% 8%;
-    --foreground: 60 20% 98%;
-
-    --card: 160 40% 12%;
-    --card-foreground: 60 20% 98%;
-
-    --popover: 160 40% 12%;
-    --popover-foreground: 60 20% 98%;
-
-    --primary: 90 60% 50%;
-    --primary-foreground: 160 40% 10%;
-
-    --secondary: 155 50% 35%;
-    --secondary-foreground: 60 20% 98%;
-
-    --accent: 90 60% 50%;
-    --accent-foreground: 160 40% 10%;
-
-    --muted: 160 30% 18%;
-    --muted-foreground: 60 10% 70%;
-
-    --cream: 60 10% 15%;
-    --cream-foreground: 60 20% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 160 30% 20%;
-    --input: 160 30% 20%;
-    --ring: 90 60% 50%;
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background:  150 55% 3%;
+    --foreground:  140 25% 94%;
+    --card:        150 45% 5%;
+    --card-foreground: 140 25% 94%;
+    --popover:     150 45% 6%;
+    --popover-foreground: 140 25% 94%;
+    --primary:     142 65% 42%;
+    --primary-foreground: 0 0% 100%;
+    --secondary:   155 50% 30%;
+    --secondary-foreground: 0 0% 100%;
+    --accent:      120 65% 58%;
+    --accent-foreground: 150 55% 5%;
+    --muted:       150 30% 9%;
+    --muted-foreground: 140 18% 55%;
+    --cream:       150 30% 8%;
+    --cream-foreground: 140 25% 90%;
+    --destructive: 0 68% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border:      142 38% 15%;
+    --input:       142 38% 13%;
+    --ring:        142 60% 48%;
   }
 }
 
@@ -105,18 +90,182 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply text-foreground font-sans antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    background-color: hsl(150, 55%, 3%);
+    /* Mesh gradient orbs — slightly richer than before for a livelier backdrop */
+    background-image:
+      radial-gradient(ellipse 70% 50% at 15% 15%, rgba(34, 197, 94, 0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 55% 70% at 85% 80%, rgba(22, 163, 74, 0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 60% 40%, rgba(74, 222, 128, 0.055) 0%, transparent 70%);
+    min-height: 100vh;
+  }
+
+  /* Green-tinted scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: hsl(150, 50%, 5%); }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(34, 197, 94, 0.28);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 197, 94, 0.5);
   }
 }
 
 @layer utilities {
+  /* ─────────────────────────────────────────
+     GLASSMORPHISM SURFACES
+  ───────────────────────────────────────── */
+
+  .glass {
+    background: rgba(8, 25, 14, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(34, 197, 94, 0.14);
+  }
+
+  .glass-card {
+    background: rgba(6, 20, 11, 0.58);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(34, 197, 94, 0.11);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .glass-card:hover {
+    border-color: rgba(34, 197, 94, 0.28);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.55),
+      0 0 24px rgba(34, 197, 94, 0.09),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  /* Navbar — more opaque on scroll (toggled via JS class) */
+  .glass-nav {
+    background: rgba(4, 14, 8, 0.78);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border-bottom: 1px solid rgba(34, 197, 94, 0.1);
+    box-shadow: 0 1px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .glass-panel {
+    background: rgba(10, 30, 18, 0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(34, 197, 94, 0.13);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  /* ─────────────────────────────────────────
+     GLOW EFFECTS
+  ───────────────────────────────────────── */
+
+  .glow-green {
+    box-shadow:
+      0 0 20px rgba(34, 197, 94, 0.38),
+      0 0 60px rgba(34, 197, 94, 0.14);
+  }
+
+  .glow-green-sm {
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.24);
+  }
+
+  .glow-green-border {
+    box-shadow:
+      0 0 0 1px rgba(34, 197, 94, 0.4),
+      0 0 16px rgba(34, 197, 94, 0.2);
+  }
+
+  /* ─────────────────────────────────────────
+     GRADIENTS & TEXT
+  ───────────────────────────────────────── */
+
   .gradient-hero {
-    background: linear-gradient(135deg, hsl(var(--gradient-hero-start)) 0%, hsl(var(--gradient-hero-end)) 100%);
+    background: linear-gradient(
+      135deg,
+      hsl(var(--gradient-hero-start)) 0%,
+      hsl(var(--gradient-hero-end)) 100%
+    );
   }
 
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--secondary)) 100%);
+    /* Slightly punchier mint → emerald for hero headlines */
+    background-image: linear-gradient(
+      135deg,
+      hsl(130, 72%, 72%) 0%,
+      hsl(155, 72%, 52%) 100%
+    );
+  }
+
+  /* Emerald shimmer on gradient headings */
+  .text-glow {
+    text-shadow:
+      0 0 20px rgba(74, 222, 128, 0.45),
+      0 0 60px rgba(74, 222, 128, 0.15);
+  }
+
+  /* ─────────────────────────────────────────
+     BACKGROUND ORB HELPERS
+  ───────────────────────────────────────── */
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    opacity: 0.55;
+  }
+
+  .orb-green-lg {
+    background: radial-gradient(
+      circle,
+      rgba(34, 197, 94, 0.18) 0%,
+      transparent 70%
+    );
+  }
+
+  .orb-green-sm {
+    background: radial-gradient(
+      circle,
+      rgba(74, 222, 128, 0.14) 0%,
+      transparent 70%
+    );
+  }
+
+  /* ─────────────────────────────────────────
+     MISC UTILITIES
+  ───────────────────────────────────────── */
+
+  .border-glow {
+    border-color: rgba(34, 197, 94, 0.3) !important;
+  }
+
+  /* Thin top accent line on cards */
+  .card-accent-line {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-accent-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(74, 222, 128, 0.5) 50%,
+      transparent 100%
+    );
   }
 }
