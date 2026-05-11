@@ -99,9 +99,9 @@
     background-color: hsl(150, 55%, 3%);
     /* Mesh gradient orbs — slightly richer than before for a livelier backdrop */
     background-image:
-      radial-gradient(ellipse 70% 50% at 15% 15%, rgba(52, 103, 57, 0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 55% 70% at 85% 80%, rgba(40, 71, 44, 0.14) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 60% 40%, rgba(124, 184, 131, 0.06) 0%, transparent 70%);
+      radial-gradient(ellipse 70% 50% at 15% 15%, rgba(52, 103, 57, 0.16) 0%, transparent 58%),
+      radial-gradient(ellipse 55% 70% at 85% 80%, rgba(40, 71, 44, 0.16) 0%, transparent 58%),
+      radial-gradient(ellipse 45% 45% at 55% 35%, rgba(124, 184, 131, 0.08) 0%, transparent 65%);
     min-height: 100vh;
   }
 
@@ -158,13 +158,14 @@
   }
 
   .glass-panel {
-    background: rgba(10, 30, 18, 0.5);
+    background: rgba(10, 30, 18, 0.52);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(52, 103, 57, 0.16);
+    border: 1px solid rgba(124, 184, 131, 0.14);
     box-shadow:
       0 4px 24px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      0 0 40px rgba(52, 103, 57, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
   /* ─────────────────────────────────────────
@@ -201,19 +202,28 @@
 
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    /* Sage → forest for hero headlines */
+    /* Highlight word: light sage → mid green (reads closer to reference “glow” headline) */
     background-image: linear-gradient(
       135deg,
-      hsl(126, 28%, 72%) 0%,
-      hsl(126, 33%, 42%) 100%
+      hsl(126, 38%, 84%) 0%,
+      hsl(126, 36%, 58%) 42%,
+      hsl(126, 33%, 38%) 100%
     );
   }
 
-  /* Soft glow on gradient headings */
+  /* Glow on gradient headings — tuned to pop on near-black bg */
   .text-glow {
     text-shadow:
-      0 0 20px rgba(124, 184, 131, 0.4),
-      0 0 60px rgba(52, 103, 57, 0.2);
+      0 0 28px rgba(124, 184, 131, 0.55),
+      0 0 80px rgba(52, 103, 57, 0.35);
+  }
+
+  /* Hero / auth: visible dark-green grid (reference uses forest lines, not faint mint) */
+  .bg-hero-grid {
+    background-image:
+      linear-gradient(rgba(52, 103, 57, 0.28) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(52, 103, 57, 0.28) 1px, transparent 1px);
+    background-size: 48px 48px;
   }
 
   /* ─────────────────────────────────────────
@@ -231,16 +241,16 @@
   .orb-green-lg {
     background: radial-gradient(
       circle,
-      rgba(52, 103, 57, 0.2) 0%,
-      transparent 70%
+      rgba(52, 103, 57, 0.26) 0%,
+      transparent 68%
     );
   }
 
   .orb-green-sm {
     background: radial-gradient(
       circle,
-      rgba(124, 184, 131, 0.12) 0%,
-      transparent 70%
+      rgba(124, 184, 131, 0.16) 0%,
+      transparent 68%
     );
   }
 

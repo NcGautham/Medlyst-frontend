@@ -50,7 +50,7 @@ function HeroDoctorPreviewBody({ doctor }: { doctor: Doctor }) {
         ))}
       </div>
       <Button
-        className="mt-5 w-full border border-forest/30 bg-forest/20 text-forest-soft transition-all hover:bg-forest/30 hover:text-white"
+        className="mt-5 w-full border-0 bg-forest font-semibold text-white shadow-glow-sm transition-all hover:bg-forest-hover hover:brightness-110 active:scale-[0.99]"
         size="lg"
         asChild
       >
@@ -90,18 +90,11 @@ export const Hero = () => {
     <section className="relative flex min-h-[100dvh] min-h-screen items-center overflow-x-hidden bg-[hsl(150,55%,3%)]">
       {/* Background orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="orb orb-green-lg w-[600px] h-[600px] top-[-100px] left-[-150px] opacity-60" />
-        <div className="orb orb-green-sm w-[400px] h-[400px] bottom-[-50px] right-[-100px] opacity-50" />
-        <div className="orb orb-green-lg w-[300px] h-[300px] top-[40%] left-[55%] opacity-30" />
-        {/* Grid overlay — line alpha tuned for dark bg (forest is darker than old mint; no extra 0.035 layer) */}
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(124, 184, 131, 0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(124, 184, 131, 0.14) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }}
-        />
+        <div className="orb orb-green-lg h-[600px] w-[600px] top-[-100px] left-[-150px] opacity-[0.72]" />
+        <div className="orb orb-green-sm h-[400px] w-[400px] bottom-[-50px] right-[-100px] opacity-[0.58]" />
+        <div className="orb orb-green-lg h-[320px] w-[320px] top-[38%] left-[52%] opacity-40" />
+        {/* Square grid — dark forest lines + 48px rhythm (matches reference density) */}
+        <div className="bg-hero-grid absolute inset-0" aria-hidden />
       </div>
 
       <Container size="lg" className="relative z-10 pb-12 pt-28 sm:pb-20 sm:pt-32">
@@ -157,8 +150,8 @@ export const Hero = () => {
                 { value: '4.9', label: 'Average Rating' },
               ].map((s) => (
                 <div key={s.label} className="text-center lg:text-left">
-                  <div className="text-3xl font-bold text-gradient">{s.value}</div>
-                  <div className="text-sm text-white/40 mt-0.5">{s.label}</div>
+                  <div className="text-3xl font-bold text-white">{s.value}</div>
+                  <div className="mt-0.5 text-sm text-white/45">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -175,7 +168,7 @@ export const Hero = () => {
             className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none"
           >
             <div className="relative z-10">
-              <div className="glass-panel card-accent-line mx-auto min-h-[220px] max-w-md rounded-2xl p-5 sm:min-h-[230px] sm:rounded-3xl sm:p-6 lg:max-w-md">
+              <div className="glass-panel card-accent-line mx-auto min-h-[220px] max-w-md rounded-2xl p-5 shadow-glow-sm sm:min-h-[230px] sm:rounded-3xl sm:p-6 lg:max-w-md">
                 {previewInner}
               </div>
             </div>
@@ -184,7 +177,7 @@ export const Hero = () => {
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              className="glass-panel absolute -top-4 -right-4 z-20 hidden rounded-2xl p-4 lg:block"
+              className="glass-panel absolute -top-4 -right-4 z-20 hidden rounded-2xl p-4 shadow-glow-sm lg:block"
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-forest/15 border border-forest/20 flex items-center justify-center">
@@ -201,7 +194,7 @@ export const Hero = () => {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-              className="glass-panel absolute -bottom-4 -left-4 z-20 hidden rounded-2xl p-4 lg:block"
+              className="glass-panel absolute -bottom-4 -left-4 z-20 hidden rounded-2xl p-4 shadow-glow-sm lg:block"
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-forest/15 border border-forest/20 flex items-center justify-center">

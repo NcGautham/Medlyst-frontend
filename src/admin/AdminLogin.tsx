@@ -48,15 +48,7 @@ const AdminLogin = () => {
 
   return (
     <div className="relative flex min-h-[calc(100dvh-10rem)] flex-col items-center justify-center bg-background px-4 py-12 pb-[max(3rem,env(safe-area-inset-bottom))] pt-8 sm:min-h-[calc(100vh-12rem)] sm:py-16">
-      <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(124, 184, 131, 0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(124, 184, 131, 0.12) 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
-        }}
-      />
+      <div className="bg-hero-grid pointer-events-none absolute inset-0" aria-hidden />
 
       <Card className="relative z-10 w-full max-w-md glass-card card-accent-line rounded-2xl border-forest/20 shadow-lift">
         <CardHeader className="space-y-3 pb-2">
