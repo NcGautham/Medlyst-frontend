@@ -26,7 +26,6 @@ export const DoctorCard = ({ doctor }: DoctorCardProps) => {
               alt={doctor.name}
               className="h-16 w-16 rounded-2xl border border-[#346739]/20 bg-[#061509]/55 object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08] sm:h-20 sm:w-20"
               loading="lazy"
-              decoding="async"
             />
             <span className="pointer-events-none absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border-2 border-[hsl(150,55%,3%)] bg-[#7bcc84] shadow-glow-sm sm:h-4 sm:w-4" />
           </div>

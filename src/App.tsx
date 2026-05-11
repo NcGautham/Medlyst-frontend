@@ -22,37 +22,19 @@ import { BookingProvider } from "@/context/BookingContext";
 import { DoctorsProvider } from "@/context/DoctorsContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { BookingModal } from "@/components/BookingModal";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
-
-const Home = lazy(() => import("./pages/Home"));
-const Doctors = lazy(() => import("./pages/Doctors"));
-const DoctorProfile = lazy(() => import("./pages/DoctorProfile"));
-const About = lazy(() => import("./pages/About"));
-const Contact = lazy(() => import("./pages/Contact"));
-const Terms = lazy(() => import("./pages/Terms"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const AdminPage = lazy(() => import("./admin/AdminPage"));
-const AdminLogin = lazy(() => import("./admin/AdminLogin"));
-
-const BookingModal = lazy(() =>
-  import("@/components/BookingModal").then((m) => ({ default: m.BookingModal })),
-);
-const ScrollProgressBar = lazy(() =>
-  import("@/components/ScrollProgressBar").then((m) => ({ default: m.ScrollProgressBar })),
-);
-const CursorSpotlight = lazy(() =>
-  import("@/components/CursorSpotlight").then((m) => ({ default: m.CursorSpotlight })),
-);
-
-const PageFallback = () => (
-  <div className="flex min-h-[50vh] items-center justify-center bg-[hsl(150,55%,3%)]">
-    <div
-      className="h-8 w-8 animate-spin rounded-full border-2 border-[#346739]/50 border-t-[#7bcc84]"
-      aria-hidden
-    />
-    <span className="sr-only">Loading page</span>
-  </div>
-);
+import { ScrollProgressBar } from "@/components/ScrollProgressBar";
+import { CursorSpotlight } from "@/components/CursorSpotlight";
+import Home from "./pages/Home";
+import Doctors from "./pages/Doctors";
+import DoctorProfile from "./pages/DoctorProfile";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Terms from "./pages/Terms";
+import NotFound from "./pages/NotFound";
+import AdminPage from "./admin/AdminPage";
+import AdminLogin from "./admin/AdminLogin";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isAuthenticated = localStorage.getItem('medlyst_admin_token') === 'true';
@@ -69,13 +51,8 @@ const AnimatedRoutes = () => {
   // Scroll to top whenever the pathname changes — done here so it fires after
   // the new motion.div has mounted, avoiding a jump during the outgoing exit.
   useEffect(() => {
-    const scroll = () => {
-      try {
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-      } catch {
-        window.scrollTo(0, 0);
-      }
-    };
+    const scroll = () =>
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
     requestAnimationFrame(scroll);
   }, [location.pathname]);
 
@@ -86,17 +63,17 @@ const AnimatedRoutes = () => {
         initial={
           reduce
             ? { opacity: 0 }
-            : { opacity: 0, y: 12 }
+            : { opacity: 0, y: 14, filter: 'blur(5px)' }
         }
         animate={
           reduce
             ? { opacity: 1 }
-            : { opacity: 1, y: 0 }
+            : { opacity: 1, y: 0, filter: 'blur(0px)' }
         }
         exit={
           reduce
             ? { opacity: 0 }
-            : { opacity: 0, y: -6 }
+            : { opacity: 0, y: -8, filter: 'blur(3px)' }
         }
         transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
       >
@@ -123,15 +100,7 @@ const AnimatedRoutes = () => {
   );
 };
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60_000,
-      gcTime: 5 * 60_000,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 const App = () => {
   const [DevToolbar, setDevToolbar] = useState<LazyExoticComponent<
@@ -156,23 +125,15 @@ const App = () => {
               </Suspense>
             ) : null}
             <BrowserRouter>
-              <Suspense fallback={null}>
-                <ScrollProgressBar />
-              </Suspense>
-              <Suspense fallback={null}>
-                <CursorSpotlight />
-              </Suspense>
+              <ScrollProgressBar />
+              <CursorSpotlight />
               <Header />
               <div className="pb-safe-nav">
-                <Suspense fallback={<PageFallback />}>
-                  <AnimatedRoutes />
-                </Suspense>
+                <AnimatedRoutes />
                 <Footer />
               </div>
               <MobileBottomNav />
-              <Suspense fallback={null}>
-                <BookingModal />
-              </Suspense>
+              <BookingModal />
             </BrowserRouter>
           </BookingProvider>
         </DoctorsProvider>
