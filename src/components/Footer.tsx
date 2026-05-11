@@ -60,13 +60,13 @@ function InstagramIcon({ className }: { className?: string }) {
 
 export const Footer = () => {
   return (
-    <footer className="glass-nav border-t border-emerald-500/10 text-white/80">
-      <Container size="lg" className="py-12 md:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+    <footer className="glass-nav border-t border-forest/10 text-white/80">
+      <Container size="lg" className="py-10 sm:py-12 md:py-16">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-8 md:grid-cols-4 lg:gap-12">
           {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="sm:col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4 group">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center group-hover:border-emerald-400/50 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-forest/15 border border-forest/25 flex items-center justify-center group-hover:border-forest-light/50 transition-colors">
                 <img src="/logo.png" alt="Medlyst" className="w-7 h-7 object-contain" />
               </div>
               <span className="text-xl font-bold text-white">Medlyst</span>
@@ -74,12 +74,12 @@ export const Footer = () => {
             <p className="text-white/40 text-sm leading-relaxed mb-6">
               Making healthcare accessible by connecting patients with top-rated doctors effortlessly.
             </p>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
-                  className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center text-white/40 hover:text-emerald-400 hover:border-emerald-500/35 transition-all duration-200"
+                  className="flex h-11 min-h-11 w-11 min-w-11 items-center justify-center rounded-lg border border-forest/15 bg-forest/10 text-white/40 transition-all duration-200 hover:border-forest/35 hover:text-forest-light"
                   aria-label={social.name}
                 >
                   <social.icon className="w-4 h-4" />
@@ -96,7 +96,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-sm text-white/40 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-sm text-white/40 hover:text-forest-light transition-colors duration-200"
                   >
                     {link.name}
                   </Link>
@@ -113,7 +113,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-sm text-white/40 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-sm text-white/40 hover:text-forest-light transition-colors duration-200"
                   >
                     {link.name}
                   </Link>
@@ -130,7 +130,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-sm text-white/40 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-sm text-white/40 hover:text-forest-light transition-colors duration-200"
                   >
                     {link.name}
                   </Link>
@@ -140,7 +140,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-emerald-500/8">
+        <div className="mt-12 pt-8 border-t border-forest/8">
           <p className="text-center text-sm text-white/30">
             © {new Date().getFullYear()} Medlyst. All rights reserved.
           </p>

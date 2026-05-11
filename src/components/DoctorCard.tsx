@@ -14,29 +14,28 @@ export const DoctorCard = ({ doctor }: DoctorCardProps) => {
 
   return (
     <motion.div
-      whileHover={{ y: -6, scale: 1.01 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="glass-card card-accent-line rounded-2xl overflow-hidden h-full flex flex-col group"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl glass-card card-accent-line transition-transform duration-200 active:scale-[0.99] md:hover:-translate-y-1 md:hover:shadow-lg"
     >
-      <div className="p-6 flex flex-col h-full">
+      <div className="flex h-full flex-col p-5 sm:p-6">
         {/* Doctor info row */}
         <div className="flex items-start gap-4">
           <div className="relative flex-shrink-0">
             <img
               src={doctor.photoUrl}
               alt={doctor.name}
-              className="w-20 h-20 rounded-2xl object-cover border border-emerald-500/20 bg-emerald-950/40"
+              className="w-20 h-20 rounded-2xl object-cover border border-forest/20 bg-forest-dark/45"
               loading="lazy"
             />
             {/* Green online dot */}
-            <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-[hsl(150,55%,3%)] shadow-glow-sm" />
+            <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-forest-light rounded-full border-2 border-[hsl(150,55%,3%)] shadow-glow-sm" />
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-white/90 truncate group-hover:text-emerald-300 transition-colors duration-200">
+            <h3 className="font-semibold text-white/90 truncate group-hover:text-forest-soft transition-colors duration-200">
               {doctor.name}
             </h3>
-            <p className="text-sm text-emerald-400/80 mt-0.5">{doctor.specialty}</p>
+            <p className="text-sm text-forest-light/80 mt-0.5">{doctor.specialty}</p>
             <div className="flex items-center gap-1 mt-2">
               <StarIcon className="w-4 h-4 text-amber-400 flex-shrink-0" />
               <span className="text-sm font-semibold text-white/80">{doctor.rating}</span>
@@ -47,7 +46,7 @@ export const DoctorCard = ({ doctor }: DoctorCardProps) => {
 
         {/* Hospital */}
         <div className="flex items-center gap-2 mt-4 text-sm text-white/40">
-          <MapPinIcon className="w-4 h-4 flex-shrink-0 text-emerald-500/60" />
+          <MapPinIcon className="w-4 h-4 flex-shrink-0 text-forest/60" />
           <span className="truncate">{doctor.hospital}</span>
         </div>
 
@@ -56,7 +55,7 @@ export const DoctorCard = ({ doctor }: DoctorCardProps) => {
           {doctor.tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-300/80 border border-emerald-500/15"
+              className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-forest/10 text-forest-soft/80 border border-forest/15"
             >
               {tag}
             </span>
@@ -67,18 +66,18 @@ export const DoctorCard = ({ doctor }: DoctorCardProps) => {
         <div className="mt-4 border-t border-white/5" />
 
         {/* Action buttons */}
-        <div className="flex gap-3 mt-4">
+        <div className="mt-4 flex flex-col gap-2.5 sm:flex-row sm:gap-3">
           <Button
             variant="outline"
             size="sm"
-            className="flex-1 border-emerald-500/20 text-white/60 hover:text-emerald-300 hover:border-emerald-500/40 hover:bg-emerald-500/8 bg-transparent"
+            className="min-h-11 flex-1 border-forest/20 bg-transparent text-white/60 hover:border-forest/40 hover:bg-forest/8 hover:text-forest-soft sm:min-h-9"
             asChild
           >
             <Link to={`/doctor/${doctor.id}`}>Profile</Link>
           </Button>
           <Button
             size="sm"
-            className="flex-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 hover:text-white hover:border-emerald-400/50 shadow-glow-sm"
+            className="min-h-11 flex-1 border border-forest/30 bg-forest/20 text-forest-soft shadow-glow-sm hover:border-forest-light/50 hover:bg-forest/30 hover:text-white sm:min-h-9"
             onClick={() => openBookingModal(doctor)}
           >
             Book Now

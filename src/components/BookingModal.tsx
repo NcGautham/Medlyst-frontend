@@ -133,7 +133,7 @@ export const BookingModal = () => {
     <AnimatePresence>
       {isModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby="booking-modal-title"
@@ -154,34 +154,35 @@ export const BookingModal = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2 }}
-            className="relative bg-card rounded-2xl shadow-lift w-full max-w-lg max-h-[90vh] overflow-hidden"
+            className="relative flex max-h-[100dvh] w-full max-w-lg flex-col overflow-hidden rounded-none bg-card shadow-lift sm:max-h-[90vh] sm:rounded-2xl"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-border">
-              <div className="flex items-center gap-4">
+            <div className="flex shrink-0 items-start justify-between gap-3 border-b border-border p-4 pt-[max(1rem,env(safe-area-inset-top))] sm:items-center sm:p-6 sm:pt-6">
+              <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
                 <img
                   src={selectedDoctor.photoUrl}
                   alt={selectedDoctor.name}
-                  className="w-12 h-12 rounded-xl object-cover"
+                  className="h-11 w-11 shrink-0 rounded-xl object-cover sm:h-12 sm:w-12"
                 />
-                <div>
-                  <h2 id="booking-modal-title" className="font-semibold text-foreground">
+                <div className="min-w-0">
+                  <h2 id="booking-modal-title" className="truncate text-sm font-semibold text-foreground sm:text-base">
                     {step === 'success' ? 'Booking Confirmed!' : `Book with ${selectedDoctor.name}`}
                   </h2>
-                  <p className="text-sm text-muted-foreground">{selectedDoctor.specialty}</p>
+                  <p className="truncate text-xs text-muted-foreground sm:text-sm">{selectedDoctor.specialty}</p>
                 </div>
               </div>
               <button
+                type="button"
                 onClick={handleClose}
-                className="p-2 hover:bg-muted rounded-lg transition-colors"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-muted touch-manipulation"
                 aria-label="Close modal"
               >
-                <XMarkIcon className="w-5 h-5" />
+                <XMarkIcon className="h-5 w-5" />
               </button>
             </div>
 
             {/* Content */}
-            <div className="p-6 overflow-y-auto max-h-[60vh]">
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-6">
               {step === 'datetime' && (
                 <div className="space-y-6">
                   {/* Date Selection */}
@@ -190,13 +191,13 @@ export const BookingModal = () => {
                       <CalendarIcon className="w-5 h-5" />
                       Select Date
                     </h3>
-                    <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+                    <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
                       {selectedDoctor.availableSlots.slice(0, 10).map((slot) => (
                         <button
                           key={slot.date}
                           onClick={() => setSelectedDate(slot.date)}
                           className={cn(
-                            "p-3 rounded-xl text-center transition-all",
+                            'min-h-[3.25rem] rounded-xl p-2 text-center transition-all sm:min-h-0 sm:p-3',
                             selectedDate === slot.date
                               ? "bg-primary text-primary-foreground"
                               : "bg-muted hover:bg-muted/80"
@@ -223,7 +224,7 @@ export const BookingModal = () => {
                         <ClockIcon className="w-5 h-5" />
                         Select Time
                       </h3>
-                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
                         {selectedDoctor.availableSlots
                           .find((s) => s.date === selectedDate)
                           ?.times.map((slotTime) => (
@@ -231,7 +232,7 @@ export const BookingModal = () => {
                               key={slotTime.time + slotTime.slotId}
                               onClick={() => setSelectedTime(slotTime)}
                               className={cn(
-                                "py-2 px-3 rounded-lg text-sm font-medium transition-all",
+                                'min-h-11 rounded-lg px-3 py-2 text-sm font-medium transition-all sm:min-h-10',
                                 selectedTime?.time === slotTime.time
                                   ? "bg-primary text-primary-foreground"
                                   : "bg-muted hover:bg-muted/80"
@@ -266,7 +267,7 @@ export const BookingModal = () => {
                       id="patientName"
                       type="text"
                       {...register('patientName')}
-                      className="w-full px-4 py-3 bg-muted rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      className="min-h-11 w-full rounded-xl bg-muted px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 md:text-sm"
                       placeholder="John Doe"
                     />
                     {errors.patientName && (
@@ -282,7 +283,7 @@ export const BookingModal = () => {
                       id="email"
                       type="email"
                       {...register('email')}
-                      className="w-full px-4 py-3 bg-muted rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      className="min-h-11 w-full rounded-xl bg-muted px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 md:text-sm"
                       placeholder="john@example.com"
                     />
                     {errors.email && (
@@ -298,7 +299,7 @@ export const BookingModal = () => {
                       id="phone"
                       type="tel"
                       {...register('phone')}
-                      className="w-full px-4 py-3 bg-muted rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      className="min-h-11 w-full rounded-xl bg-muted px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 md:text-sm"
                       placeholder="+1 (555) 123-4567"
                     />
                     {errors.phone && (
@@ -314,7 +315,7 @@ export const BookingModal = () => {
                       id="reason"
                       {...register('reason')}
                       rows={3}
-                      className="w-full px-4 py-3 bg-muted rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none"
+                      className="min-h-[5.5rem] w-full resize-none rounded-xl bg-muted px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 md:text-sm"
                       placeholder="Briefly describe your symptoms or reason for the appointment..."
                     />
                     {errors.reason && (
@@ -357,16 +358,16 @@ export const BookingModal = () => {
             </div>
 
             {/* Footer */}
-            <div className="flex gap-3 p-6 border-t border-border">
+            <div className="flex shrink-0 flex-col gap-2 border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:flex-row sm:gap-3 sm:p-6 sm:pb-6">
               {step === 'datetime' && (
                 <>
-                  <Button variant="outline" onClick={handleClose} className="flex-1">
+                  <Button variant="outline" onClick={handleClose} className="min-h-12 flex-1 sm:min-h-10">
                     Cancel
                   </Button>
                   <Button
                     onClick={() => setStep('form')}
                     disabled={!selectedDate || !selectedTime}
-                    className="flex-1"
+                    className="min-h-12 flex-1 sm:min-h-10"
                   >
                     Continue
                   </Button>
@@ -375,13 +376,13 @@ export const BookingModal = () => {
 
               {step === 'form' && (
                 <>
-                  <Button variant="outline" onClick={() => setStep('datetime')} className="flex-1">
+                  <Button variant="outline" onClick={() => setStep('datetime')} className="min-h-12 flex-1 sm:min-h-10">
                     Back
                   </Button>
                   <Button
                     onClick={handleSubmit(onSubmit)}
                     disabled={isSubmitting}
-                    className="flex-1"
+                    className="min-h-12 flex-1 sm:min-h-10"
                   >
                     {isSubmitting ? 'Booking...' : 'Confirm Booking'}
                   </Button>
@@ -389,7 +390,7 @@ export const BookingModal = () => {
               )}
 
               {step === 'success' && (
-                <Button onClick={handleClose} className="w-full">
+                <Button onClick={handleClose} className="min-h-12 w-full sm:min-h-10">
                   Done
                 </Button>
               )}

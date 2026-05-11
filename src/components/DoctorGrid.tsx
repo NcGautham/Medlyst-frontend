@@ -31,7 +31,7 @@ const itemVariants = {
 export const DoctorGrid = ({ doctors, loading = false }: DoctorGridProps) => {
   if (loading) {
     return (
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
         {[...Array(8)].map((_, i) => (
           <div
             key={i}
@@ -73,7 +73,7 @@ export const DoctorGrid = ({ doctors, loading = false }: DoctorGridProps) => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 md:gap-6 lg:grid-cols-3 xl:grid-cols-4"
     >
       {doctors.map((doctor) => (
         <motion.div key={doctor.id} variants={itemVariants}>

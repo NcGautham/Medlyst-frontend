@@ -16,10 +16,10 @@ export const Testimonials = () => {
   };
 
   return (
-    <section className="py-20 bg-cream">
+    <section className="bg-cream py-12 sm:py-16 md:py-20">
       <Container size="lg">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="mb-4 text-2xl font-bold text-foreground sm:text-3xl md:text-4xl">
             What Our Patients Say
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -101,20 +101,22 @@ export const Testimonials = () => {
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex justify-center gap-4 mt-6">
+            <div className="mt-6 flex justify-center gap-4">
               <button
+                type="button"
                 onClick={prevTestimonial}
-                className="w-10 h-10 rounded-full bg-card shadow-soft flex items-center justify-center hover:bg-muted transition-colors"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-card shadow-soft transition-colors hover:bg-muted touch-manipulation"
                 aria-label="Previous testimonial"
               >
-                <ChevronLeftIcon className="w-5 h-5" />
+                <ChevronLeftIcon className="h-5 w-5" />
               </button>
               <button
+                type="button"
                 onClick={nextTestimonial}
-                className="w-10 h-10 rounded-full bg-card shadow-soft flex items-center justify-center hover:bg-muted transition-colors"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-card shadow-soft transition-colors hover:bg-muted touch-manipulation"
                 aria-label="Next testimonial"
               >
-                <ChevronRightIcon className="w-5 h-5" />
+                <ChevronRightIcon className="h-5 w-5" />
               </button>
             </div>
           </div>

@@ -16,17 +16,17 @@ import {
 
 const steps = [
   {
-    icon: <MagnifyingGlassIcon className="w-7 h-7 text-emerald-400" />,
+    icon: <MagnifyingGlassIcon className="w-7 h-7 text-forest-light" />,
     title: 'Search for a Doctor',
     description: 'Browse our network of specialists. Filter by specialty, location, or rating to find your perfect match.',
   },
   {
-    icon: <CalendarDaysIcon className="w-7 h-7 text-emerald-400" />,
+    icon: <CalendarDaysIcon className="w-7 h-7 text-forest-light" />,
     title: 'Choose Your Time',
     description: 'View real-time availability and pick a slot that fits your schedule. Morning, afternoon, or evening.',
   },
   {
-    icon: <CheckBadgeIcon className="w-7 h-7 text-emerald-400" />,
+    icon: <CheckBadgeIcon className="w-7 h-7 text-forest-light" />,
     title: 'Book an Appointment',
     description: 'Confirm your booking in seconds. Receive instant confirmation and reminders for your visit.',
   },
@@ -42,32 +42,32 @@ const Home = () => {
       <Hero />
 
       {/* ── Health Info ── */}
-      <section className="py-20 bg-background">
+      <section className="bg-background py-12 sm:py-16 md:py-20">
         <Container size="lg">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-12">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="glass-card card-accent-line rounded-3xl p-8 md:p-12"
+              className="glass-card card-accent-line rounded-2xl p-5 sm:rounded-3xl sm:p-8 md:p-12"
             >
-              <div className="inline-flex items-center gap-2 text-emerald-400 mb-5">
+              <div className="inline-flex items-center gap-2 text-forest-light mb-5">
                 <HeartIcon className="w-6 h-6" />
                 <span className="text-sm font-medium">Healthcare Made Simple</span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <h2 className="mb-4 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
                 Your Health, Your Schedule —{' '}
                 <span className="text-gradient">Book with Ease</span>
               </h2>
-              <p className="text-white/50 mb-8 leading-relaxed">
+              <p className="mb-8 text-sm leading-relaxed text-white/50 sm:text-base">
                 No more waiting on hold or navigating complex phone trees.
                 With Medlyst, you can find, compare, and book appointments with
                 top-rated doctors in just a few clicks.
               </p>
               <Button
                 size="lg"
-                className="bg-emerald-500 hover:bg-emerald-400 text-white shadow-glow-sm hover:brightness-110 active:scale-[0.99] transition-transform"
+                className="w-full min-h-11 bg-forest text-white shadow-glow-sm transition-transform hover:bg-forest-hover hover:brightness-110 active:scale-[0.99] sm:w-auto"
                 asChild
               >
                 <Link to="/doctors">Find a Doctor</Link>
@@ -79,18 +79,18 @@ const Home = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="relative"
+              className="relative mt-6 lg:mt-0"
             >
               <img
                 src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=600&h=500&fit=crop"
                 alt="Doctor consulting with patient"
-                className="rounded-3xl shadow-lift w-full h-auto border border-emerald-500/10"
+                className="h-auto w-full rounded-2xl border border-forest/10 shadow-lift sm:rounded-3xl"
               />
-              {/* Floating overlay card */}
-              <div className="absolute -bottom-6 -left-6 glass-panel rounded-2xl p-4 border border-emerald-500/20">
+              {/* Overlay: below image on small screens, floated on lg+ */}
+              <div className="glass-panel relative mt-4 max-w-full rounded-2xl border border-forest/20 p-4 sm:mt-5 lg:absolute lg:-bottom-6 lg:-left-6 lg:mt-0 lg:max-w-[min(100%,20rem)]">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/20 flex items-center justify-center">
-                    <CheckBadgeIcon className="w-6 h-6 text-emerald-400" />
+                  <div className="w-12 h-12 rounded-xl bg-forest/15 border border-forest/20 flex items-center justify-center">
+                    <CheckBadgeIcon className="w-6 h-6 text-forest-light" />
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-white/90">Verified Doctors</div>
@@ -104,7 +104,7 @@ const Home = () => {
       </section>
 
       {/* ── How It Works ── */}
-      <section id="features" className="py-20 bg-background">
+      <section id="features" className="bg-background py-12 sm:py-16 md:py-20">
         <Container size="lg">
           {/* Section header */}
           <div className="text-center mb-12">
@@ -113,9 +113,9 @@ const Home = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-emerald-500/25 text-emerald-300 text-sm font-medium mb-5"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-forest/25 text-forest-soft text-sm font-medium mb-5"
             >
-              <span className="w-2 h-2 bg-emerald-400 rounded-full" />
+              <span className="w-2 h-2 bg-forest-light rounded-full" />
               Simple Process
             </motion.div>
             <motion.h2
@@ -123,7 +123,7 @@ const Home = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-bold text-white mb-4"
+              className="mb-4 text-2xl font-bold text-white sm:text-3xl md:text-4xl"
             >
               Simple Steps to Book
             </motion.h2>
@@ -138,7 +138,7 @@ const Home = () => {
             </motion.p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
             {steps.map((step, index) => (
               <motion.div
                 key={step.title}
@@ -160,18 +160,18 @@ const Home = () => {
       </section>
 
       {/* ── Top Doctors ── */}
-      <section className="py-20 bg-background">
+      <section className="bg-background py-12 sm:py-16 md:py-20">
         <Container size="lg">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+          <div className="mb-10 flex flex-col gap-5 md:mb-12 md:flex-row md:items-end md:justify-between md:gap-6">
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
                 viewport={{ once: true }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-emerald-500/25 text-emerald-300 text-sm font-medium mb-5"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-forest/25 text-forest-soft text-sm font-medium mb-5"
               >
-                <span className="w-2 h-2 bg-emerald-400 rounded-full" />
+                <span className="w-2 h-2 bg-forest-light rounded-full" />
                 Top Rated
               </motion.div>
               <motion.h2
@@ -179,7 +179,7 @@ const Home = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
-                className="text-3xl md:text-4xl font-bold text-white mb-4"
+                className="mb-4 text-2xl font-bold text-white sm:text-3xl md:text-4xl"
               >
                 Meet Our Top-Rated Doctors
               </motion.h2>
@@ -202,7 +202,7 @@ const Home = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10 hover:border-emerald-400/50 bg-transparent"
+                className="w-full min-h-11 shrink-0 border-forest/30 bg-transparent text-forest-soft hover:border-forest-light/50 hover:bg-forest/10 md:w-auto"
                 asChild
               >
                 <Link to="/doctors">View All Doctors</Link>
@@ -218,37 +218,37 @@ const Home = () => {
       <Testimonials />
 
       {/* ── CTA Banner ── */}
-      <section className="py-20 bg-background">
+      <section className="bg-background py-12 sm:py-16 md:py-20">
         <Container size="lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="glass-panel card-accent-line rounded-3xl p-12 md:p-16 text-center max-w-3xl mx-auto relative overflow-hidden"
+            className="glass-panel card-accent-line relative mx-auto max-w-3xl overflow-hidden rounded-2xl px-5 py-8 text-center sm:rounded-3xl sm:px-8 sm:py-12 md:p-14 lg:p-16"
           >
             {/* Background glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-emerald-800/5 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-forest/8 via-transparent to-forest-dark/12 pointer-events-none" />
             <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <h2 className="mb-4 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
                 Take Control of Your{' '}
                 <span className="text-gradient">Health Today</span>
               </h2>
-              <p className="text-white/45 mb-10 leading-relaxed">
+              <p className="mb-8 text-sm leading-relaxed text-white/45 sm:mb-10 sm:text-base">
                 Join thousands of patients who have discovered a better way to book
                 healthcare. Your perfect doctor is just a click away.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
                 <Button
                   size="xl"
-                  className="bg-emerald-500 hover:bg-emerald-400 text-white font-semibold shadow-glow-md hover:shadow-glow-lg transition-all duration-300 hover:brightness-110 active:scale-[0.99]"
+                  className="min-h-12 w-full bg-forest font-semibold text-white shadow-glow-md transition-all duration-300 hover:bg-forest-hover hover:shadow-glow-lg hover:brightness-110 active:scale-[0.99] sm:min-h-14 sm:w-auto sm:px-10"
                   asChild
                 >
                   <Link to="/doctors">Book an Appointment</Link>
                 </Button>
                 <Button
                   size="xl"
-                  className="bg-transparent border border-emerald-500/35 text-emerald-300 hover:bg-emerald-500/10 hover:border-emerald-400/55 transition-all duration-300"
+                  className="min-h-12 w-full border border-forest/35 bg-transparent text-forest-soft transition-all hover:border-forest-light/55 hover:bg-forest/10 sm:min-h-14 sm:w-auto sm:px-10"
                   asChild
                 >
                   <Link to="/doctors">Find a Doctor</Link>

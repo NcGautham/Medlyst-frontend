@@ -24,9 +24,9 @@ const DoctorProfile = () => {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-muted pt-24 pb-16">
-        <Container>
-          <div className="text-center py-20">
+      <main className="min-h-screen bg-muted pb-12 pt-24 sm:pb-16 sm:pt-28">
+        <Container size="lg">
+          <div className="py-20 text-center">
             <p className="text-muted-foreground">Loading doctor profile...</p>
           </div>
         </Container>
@@ -36,9 +36,9 @@ const DoctorProfile = () => {
 
   if (!doctor) {
     return (
-      <main className="min-h-screen bg-muted pt-24 pb-16">
-        <Container>
-          <div className="text-center py-20">
+      <main className="min-h-screen bg-muted pb-12 pt-24 sm:pb-16 sm:pt-28">
+        <Container size="lg">
+          <div className="py-20 text-center">
             <h1 className="text-2xl font-bold text-foreground mb-4">Doctor Not Found</h1>
             <p className="text-muted-foreground mb-6">
               The doctor you're looking for doesn't exist or has been removed.
@@ -53,7 +53,7 @@ const DoctorProfile = () => {
   }
 
   return (
-    <main className="min-h-screen bg-muted pt-24 pb-16">
+    <main className="min-h-screen bg-muted pb-12 pt-24 sm:pb-16 sm:pt-28">
       <Container size="lg">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -63,17 +63,17 @@ const DoctorProfile = () => {
           {/* Back Button */}
           <Link
             to="/doctors"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
+            className="mb-6 inline-flex min-h-11 items-center gap-2 rounded-lg py-1 text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground"
           >
             <ArrowLeftIcon className="w-4 h-4" />
             Back to Doctors
           </Link>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
             {/* Main Content */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="order-2 space-y-6 lg:order-1 lg:col-span-2">
               {/* Profile Header */}
-              <div className="bg-card rounded-2xl shadow-soft p-6 md:p-8">
+              <div className="rounded-2xl bg-card p-5 shadow-soft sm:p-6 md:p-8">
                 <div className="flex flex-col sm:flex-row gap-6">
                   <img
                     src={doctor.photoUrl}
@@ -88,7 +88,7 @@ const DoctorProfile = () => {
                       </Badge>
                       <Badge variant="muted">{doctor.specialty}</Badge>
                     </div>
-                    <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+                    <h1 className="mb-2 text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
                       {doctor.name}
                     </h1>
                     <div className="flex items-center gap-4 justify-center sm:justify-start text-muted-foreground">
@@ -107,13 +107,13 @@ const DoctorProfile = () => {
               </div>
 
               {/* About */}
-              <div className="bg-card rounded-2xl shadow-soft p-6 md:p-8">
+              <div className="rounded-2xl bg-card p-5 shadow-soft sm:p-6 md:p-8">
                 <h2 className="text-xl font-semibold text-foreground mb-4">About</h2>
                 <p className="text-muted-foreground leading-relaxed">{doctor.bio}</p>
               </div>
 
               {/* Experience & Expertise */}
-              <div className="bg-card rounded-2xl shadow-soft p-6 md:p-8">
+              <div className="rounded-2xl bg-card p-5 shadow-soft sm:p-6 md:p-8">
                 <h2 className="text-xl font-semibold text-foreground mb-4">
                   Experience & Expertise
                 </h2>
@@ -151,9 +151,9 @@ const DoctorProfile = () => {
               </div>
             </div>
 
-            {/* Sidebar - Booking */}
-            <div className="lg:col-span-1">
-              <div className="bg-card rounded-2xl shadow-soft p-6 sticky top-28">
+            {/* Sidebar — booking first on narrow screens */}
+            <div className="order-1 lg:order-2 lg:col-span-1">
+              <div className="rounded-2xl bg-card p-5 shadow-soft sm:p-6 lg:sticky lg:top-28">
                 <h3 className="text-lg font-semibold text-foreground mb-4">
                   Available Slots
                 </h3>
@@ -186,7 +186,7 @@ const DoctorProfile = () => {
 
                 <Button
                   size="lg"
-                  className="w-full"
+                  className="min-h-12 w-full"
                   onClick={() => openBookingModal(doctor)}
                 >
                   Book Appointment

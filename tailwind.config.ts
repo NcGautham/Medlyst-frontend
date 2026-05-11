@@ -55,6 +55,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        forest: {
+          DEFAULT: "#346739",
+          hover: "#45824c",
+          light: "#7cb883",
+          soft: "#a3d4aa",
+          dark: "#28472c",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -76,11 +83,11 @@ export default {
       boxShadow: {
         soft: "0 4px 20px -2px rgba(0, 0, 0, 0.5)",
         card: "0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.04)",
-        lift: "0 12px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(34, 197, 94, 0.09)",
-        "glow-sm":  "0 0 12px rgba(34, 197, 94, 0.25)",
-        "glow-md":  "0 0 20px rgba(34, 197, 94, 0.38), 0 0 60px rgba(34, 197, 94, 0.13)",
-        "glow-lg":  "0 0 40px rgba(34, 197, 94, 0.45), 0 0 100px rgba(34, 197, 94, 0.18)",
-        "inner-glow": "inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(34, 197, 94, 0.06)",
+        lift: "0 12px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(52, 103, 57, 0.12)",
+        "glow-sm":  "0 0 12px rgba(52, 103, 57, 0.28)",
+        "glow-md":  "0 0 20px rgba(52, 103, 57, 0.4), 0 0 60px rgba(52, 103, 57, 0.16)",
+        "glow-lg":  "0 0 40px rgba(52, 103, 57, 0.48), 0 0 100px rgba(52, 103, 57, 0.2)",
+        "inner-glow": "inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(52, 103, 57, 0.08)",
       },
       keyframes: {
         "accordion-down": {

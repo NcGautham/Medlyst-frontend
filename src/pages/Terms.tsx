@@ -3,14 +3,14 @@ import { Container } from '@/components/ui/container';
 
 const Terms = () => {
   return (
-    <main className="min-h-screen bg-background pt-24 pb-16">
+    <main className="min-h-screen bg-background pb-12 pt-24 sm:pb-16 sm:pt-28">
       <Container size="sm">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl font-bold text-foreground mb-8">Terms & Conditions</h1>
+          <h1 className="mb-6 text-2xl font-bold text-foreground sm:mb-8 sm:text-3xl md:text-4xl">Terms & Conditions</h1>
 
           <div className="prose prose-gray max-w-none">
             <p className="text-muted-foreground mb-6">

@@ -12,10 +12,9 @@ interface StepsCardProps {
 export const StepsCard = ({ icon, title, description, step, className }: StepsCardProps) => {
   return (
     <motion.div
-      whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
       className={cn(
-        "bg-card rounded-2xl shadow-soft p-6 relative overflow-hidden",
+        'relative overflow-hidden rounded-2xl bg-card p-5 shadow-soft transition-transform duration-200 sm:p-6 md:hover:-translate-y-1',
         className
       )}
     >

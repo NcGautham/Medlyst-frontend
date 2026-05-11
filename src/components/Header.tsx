@@ -55,7 +55,7 @@ export const Header = () => {
         <nav className="flex items-center justify-between" aria-label="Main navigation">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-green-600/20 border border-emerald-500/30 flex items-center justify-center group-hover:border-emerald-400/60 transition-colors duration-200">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-forest/20 to-forest-dark/25 border border-forest/30 flex items-center justify-center group-hover:border-forest-light/60 transition-colors duration-200">
               <img
                 src="/logo.png"
                 alt="Medlyst"
@@ -76,7 +76,7 @@ export const Header = () => {
                 className={cn(
                   'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
                   isNavActive(location.pathname, link)
-                    ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20'
+                    ? 'text-forest-light bg-forest/10 border border-forest/20'
                     : 'text-white/60 hover:text-white/90 hover:bg-white/5'
                 )}
               >
@@ -87,7 +87,8 @@ export const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+            type="button"
+            className="md:hidden flex min-h-11 min-w-11 items-center justify-center rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
@@ -106,18 +107,18 @@ export const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-nav border-t border-emerald-500/10"
+            className="md:hidden glass-nav max-h-[min(28rem,85dvh)] overflow-y-auto overscroll-contain border-t border-forest/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
           >
             <Container>
-              <div className="py-4 space-y-1">
+              <div className="space-y-1 py-3">
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     to={link.name === 'Admin' ? adminNavHref() : link.href}
                     className={cn(
-                      'block px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
+                      'block rounded-lg px-4 py-3.5 text-base font-medium transition-all duration-200',
                       isNavActive(location.pathname, link)
-                        ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20'
+                        ? 'text-forest-light bg-forest/10 border border-forest/20'
                         : 'text-white/60 hover:text-white/90 hover:bg-white/5'
                     )}
                   >

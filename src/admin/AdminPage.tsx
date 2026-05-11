@@ -18,14 +18,14 @@ const AdminPage = () => {
   return (
     <main className="bg-background pt-28 pb-20">
       <Container>
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Admin Panel</h1>
-          <Button variant="outline" onClick={handleLogout}>
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Admin Panel</h1>
+          <Button variant="outline" className="min-h-11 w-full shrink-0 sm:w-auto" onClick={handleLogout}>
             Sign Out
           </Button>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
           <Card>
             <CardHeader>
               <CardTitle>Create Doctor</CardTitle>

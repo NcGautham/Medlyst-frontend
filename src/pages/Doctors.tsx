@@ -52,7 +52,7 @@ const Doctors = () => {
   );
 
   return (
-    <main className="min-h-screen bg-muted pt-24 pb-16">
+    <main className="min-h-screen bg-muted pb-12 pt-24 sm:pb-16 sm:pt-28">
       <Container size="lg">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -60,7 +60,7 @@ const Doctors = () => {
           transition={{ duration: 0.5 }}
         >
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            <h1 className="mb-4 text-2xl font-bold text-foreground sm:text-3xl md:text-4xl">
               Find Your Doctor
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">

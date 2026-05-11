@@ -27,7 +27,7 @@ const values = [
 
 const About = () => {
   return (
-    <main className="min-h-screen bg-background pt-24 pb-16">
+    <main className="min-h-screen bg-background pb-12 pt-24 sm:pb-16 sm:pt-28">
       <Container size="lg">
         {/* Hero */}
         <motion.div
@@ -36,7 +36,7 @@ const About = () => {
           transition={{ duration: 0.5 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+          <h1 className="mb-6 text-3xl font-bold text-foreground sm:text-4xl md:text-5xl">
             About Medlyst
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
