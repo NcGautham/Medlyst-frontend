@@ -22,19 +22,37 @@ import { BookingProvider } from "@/context/BookingContext";
 import { DoctorsProvider } from "@/context/DoctorsContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { BookingModal } from "@/components/BookingModal";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
-import { ScrollProgressBar } from "@/components/ScrollProgressBar";
-import { CursorSpotlight } from "@/components/CursorSpotlight";
-import Home from "./pages/Home";
-import Doctors from "./pages/Doctors";
-import DoctorProfile from "./pages/DoctorProfile";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Terms from "./pages/Terms";
-import NotFound from "./pages/NotFound";
-import AdminPage from "./admin/AdminPage";
-import AdminLogin from "./admin/AdminLogin";
+
+const Home = lazy(() => import("./pages/Home"));
+const Doctors = lazy(() => import("./pages/Doctors"));
+const DoctorProfile = lazy(() => import("./pages/DoctorProfile"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Terms = lazy(() => import("./pages/Terms"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const AdminPage = lazy(() => import("./admin/AdminPage"));
+const AdminLogin = lazy(() => import("./admin/AdminLogin"));
+
+const BookingModal = lazy(() =>
+  import("@/components/BookingModal").then((m) => ({ default: m.BookingModal })),
+);
+const ScrollProgressBar = lazy(() =>
+  import("@/components/ScrollProgressBar").then((m) => ({ default: m.ScrollProgressBar })),
+);
+const CursorSpotlight = lazy(() =>
+  import("@/components/CursorSpotlight").then((m) => ({ default: m.CursorSpotlight })),
+);
+
+const PageFallback = () => (
+  <div className="flex min-h-[50vh] items-center justify-center bg-[hsl(150,55%,3%)]">
+    <div
+      className="h-8 w-8 animate-spin rounded-full border-2 border-[#346739]/50 border-t-[#7bcc84]"
+      aria-hidden
+    />
+    <span className="sr-only">Loading page</span>
+  </div>
+);
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isAuthenticated = localStorage.getItem('medlyst_admin_token') === 'true';
@@ -100,7 +118,15 @@ const AnimatedRoutes = () => {
   );
 };
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,
+      gcTime: 5 * 60_000,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => {
   const [DevToolbar, setDevToolbar] = useState<LazyExoticComponent<
@@ -125,15 +151,23 @@ const App = () => {
               </Suspense>
             ) : null}
             <BrowserRouter>
-              <ScrollProgressBar />
-              <CursorSpotlight />
+              <Suspense fallback={null}>
+                <ScrollProgressBar />
+              </Suspense>
+              <Suspense fallback={null}>
+                <CursorSpotlight />
+              </Suspense>
               <Header />
               <div className="pb-safe-nav">
-                <AnimatedRoutes />
+                <Suspense fallback={<PageFallback />}>
+                  <AnimatedRoutes />
+                </Suspense>
                 <Footer />
               </div>
               <MobileBottomNav />
-              <BookingModal />
+              <Suspense fallback={null}>
+                <BookingModal />
+              </Suspense>
             </BrowserRouter>
           </BookingProvider>
         </DoctorsProvider>

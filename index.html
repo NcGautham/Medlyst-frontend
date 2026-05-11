@@ -19,8 +19,19 @@
     <meta name="twitter:description" content="Connect with top-rated doctors and book appointments in minutes." />
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=630&fit=crop" />
 
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <!-- Favicon (tabs / desktop). iOS "Add to Home Screen" ignores this and uses apple-touch-icon. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <!-- Required for iPhone / iPad home screen icon (without this, Safari shows a letter monogram e.g. "M"). -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Medlyst" />
+
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href="https://medlyst.com" />
+    <!-- Doctor photos often load from Unsplash — warm connection early -->
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
   </head>
 
   <body>

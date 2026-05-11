@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import {
   motion,
@@ -9,7 +9,7 @@ import {
 } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
-import SplitText from '@/components/SplitText';
+const SplitText = lazy(() => import('@/components/SplitText'));
 import { Magnetic } from '@/components/Magnetic';
 import { StatCounter } from '@/components/StatCounter';
 import { UserGroupIcon, ChartBarIcon } from '@heroicons/react/24/outline';
@@ -34,6 +34,8 @@ function HeroDoctorPreviewBody({ doctor }: { doctor: Doctor }) {
             src={doctor.photoUrl}
             alt={doctor.name}
             className="h-20 w-20 rounded-2xl border border-[#346739]/25 bg-[#061509]/55 object-cover sm:h-24 sm:w-24"
+            decoding="async"
+            fetchPriority="high"
           />
           <span className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-[hsl(150,55%,3%)] bg-[#7bcc84] shadow-glow-sm" />
         </div>
@@ -92,6 +94,21 @@ export const Hero = () => {
     }, 3000);
     return () => clearInterval(interval);
   }, [doctors]);
+
+  // Load GSAP headline chunk during idle time so animation replaces static text quickly.
+  useEffect(() => {
+    const ric = window.requestIdleCallback;
+    if (ric) {
+      const id = ric(() => {
+        void import('@/components/SplitText');
+      });
+      return () => window.cancelIdleCallback(id);
+    }
+    const t = window.setTimeout(() => {
+      void import('@/components/SplitText');
+    }, 120);
+    return () => window.clearTimeout(t);
+  }, []);
 
   // Scroll-driven parallax for orbs / spotlight
   const { scrollYProgress } = useScroll({
@@ -172,49 +189,63 @@ export const Hero = () => {
             </div>
 
             <h1 className="mb-4 text-[2rem] font-bold leading-[1.08] tracking-tight text-white sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl">
-              <span className="block">
-                <SplitText
-                  tag="span"
-                  text="Book Your Doctor's "
-                  className="inline align-baseline text-white"
-                  delay={28}
-                  duration={0.55}
-                  ease="power3.out"
-                  splitType="chars"
-                  from={{ opacity: 0, y: 36 }}
-                  to={{ opacity: 1, y: 0 }}
-                  immediate
-                  textAlign="inherit"
-                />
-                <SplitText
-                  tag="span"
-                  text="Appointment"
-                  className="hero-accent-word inline align-baseline text-gradient"
-                  delay={22}
-                  duration={0.5}
-                  ease="power3.out"
-                  splitType="chars"
-                  from={{ opacity: 0, y: 28 }}
-                  to={{ opacity: 1, y: 0 }}
-                  immediate
-                  textAlign="inherit"
-                />
-              </span>
-              <span className="mt-0 block">
-                <SplitText
-                  tag="span"
-                  text="Effortlessly"
-                  className="inline align-baseline text-white"
-                  delay={28}
-                  duration={0.55}
-                  ease="power3.out"
-                  splitType="chars"
-                  from={{ opacity: 0, y: 36 }}
-                  to={{ opacity: 1, y: 0 }}
-                  immediate
-                  textAlign="inherit"
-                />
-              </span>
+              <Suspense
+                fallback={
+                  <>
+                    <span className="block">
+                      <span className="inline align-baseline text-white">Book Your Doctor&apos;s </span>
+                      <span className="hero-accent-word inline align-baseline text-gradient">Appointment</span>
+                    </span>
+                    <span className="mt-0 block">
+                      <span className="inline align-baseline text-white">Effortlessly</span>
+                    </span>
+                  </>
+                }
+              >
+                <span className="block">
+                  <SplitText
+                    tag="span"
+                    text="Book Your Doctor's "
+                    className="inline align-baseline text-white"
+                    delay={28}
+                    duration={0.55}
+                    ease="power3.out"
+                    splitType="chars"
+                    from={{ opacity: 0, y: 36 }}
+                    to={{ opacity: 1, y: 0 }}
+                    immediate
+                    textAlign="inherit"
+                  />
+                  <SplitText
+                    tag="span"
+                    text="Appointment"
+                    className="hero-accent-word inline align-baseline text-gradient"
+                    delay={22}
+                    duration={0.5}
+                    ease="power3.out"
+                    splitType="chars"
+                    from={{ opacity: 0, y: 28 }}
+                    to={{ opacity: 1, y: 0 }}
+                    immediate
+                    textAlign="inherit"
+                  />
+                </span>
+                <span className="mt-0 block">
+                  <SplitText
+                    tag="span"
+                    text="Effortlessly"
+                    className="inline align-baseline text-white"
+                    delay={28}
+                    duration={0.55}
+                    ease="power3.out"
+                    splitType="chars"
+                    from={{ opacity: 0, y: 36 }}
+                    to={{ opacity: 1, y: 0 }}
+                    immediate
+                    textAlign="inherit"
+                  />
+                </span>
+              </Suspense>
             </h1>
 
             <p className="mx-auto mb-7 max-w-md text-[15px] leading-relaxed text-white/60 sm:mb-10 sm:max-w-xl sm:text-lg lg:mx-0">
