@@ -12,28 +12,38 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    // Prevent duplicate React when manualChunks splits node_modules; duplicate
+    // copies cause "Cannot read properties of undefined (reading 'createContext')".
+    dedupe: ["react", "react-dom"],
   },
   build: {
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (!id.includes("node_modules")) return;
-          // Core React — cache separately from feature code.
+          const norm = id.split("\\").join("/");
+
+          // GSAP first — paths like @gsap/react must NOT hit the loose "/react/" rule
+          // that used to pull unrelated packages into react-vendor.
+          if (norm.includes("gsap") || norm.includes("@gsap")) return "gsap";
+          if (norm.includes("framer-motion")) return "motion";
+          if (norm.includes("@tanstack/react-query")) return "query";
+          if (norm.includes("recharts")) return "charts";
+          if (norm.includes("@radix-ui")) return "radix";
+          if (norm.includes("lucide-react")) return "icons-lucide";
+          if (norm.includes("@heroicons")) return "icons-hero";
+
+          // Only the real react / react-dom / scheduler / router packages — not every
+          // module whose path contains the substring "react".
           if (
-            id.includes("react-dom") ||
-            id.includes("/react/") ||
-            id.includes("react-router") ||
-            id.includes("scheduler")
+            norm.includes("/react-dom/") ||
+            /[/]node_modules[/]react[/]/.test(norm) ||
+            norm.includes("/scheduler/") ||
+            norm.includes("react-router")
           ) {
             return "react-vendor";
           }
-          if (id.includes("framer-motion")) return "motion";
-          if (id.includes("gsap") || id.includes("@gsap")) return "gsap";
-          if (id.includes("@tanstack/react-query")) return "query";
-          if (id.includes("recharts")) return "charts";
-          if (id.includes("@radix-ui")) return "radix";
-          if (id.includes("lucide-react")) return "icons-lucide";
-          if (id.includes("@heroicons")) return "icons-hero";
+
           return "vendor";
         },
       },
